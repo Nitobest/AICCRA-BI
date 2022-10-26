@@ -1,0 +1,2 @@
+ori_db,des_db,ori_host,ori_dbname,ori_dbname_aiccra,ori_port,ori_usr,ori_psw,des_host,des_dbname,des_port,des_usr,des_psw,Snowflake_active,Snowflake_url,Snowflake_driver, Snowflake_usr,Snowflake_psw,S3key,s3secret,s3filename,start_year,end_year,so_name,V_PHASE_NAME,V_PHASE_YEAR,SMTP_server
+PRD,LOCAL,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,N,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,xxxxxx,2018,2019,Windows,NN,0,xxxxxx
