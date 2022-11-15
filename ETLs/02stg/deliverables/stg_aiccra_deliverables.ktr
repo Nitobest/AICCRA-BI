@@ -604,6 +604,7 @@
         ifnull(pi.project_id,'Not Aplicable') as PRY_ID,
         if(pi.project_id is null,'Not Aplicable', concat('C',pi.project_id)) as PRY_composeID,
         ifnull(pi.title,'Not Aplicable') PRY_title,
+		ifnull(pi.acronym,'Not Aplicable') PRY_acronym,
         di.deliverable_id as 'DLV_ID',
         concat('D',di.deliverable_id) as 'DLV_composeID',
         di.title as 'DLV_Title',

@@ -544,7 +544,8 @@
     <sql>SELECT cluster_owner, 
 PRY_ID, 
 PRY_composeID, 
-PRY_title, 
+PRY_title,
+PRY_acronym, 
 DLV_ID, 
 DLV_composeID, 
 DLV_Title, DLV_Description, DLV_year, DLV_Category, DLV_subCategory, DLV_Status, DLV_geographicScope, DLV_location, 
@@ -641,6 +642,29 @@ order by DLV_ID, DLV_year
         <precision>-1</precision>
         <origin>Load stg aiccra deliverables</origin>
         <comments>PRY_title</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>PRY_acronym</name>
+        <length>16383</length>
+        <precision>-1</precision>
+        <origin>Load stg aiccra deliverables</origin>
+        <comments>PRY_acronym</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -2069,6 +2093,10 @@ order by DLV_ID, DLV_year
       </field>
       <field>
         <name>PRY_title</name>
+        <rename/>
+      </field>
+      <field>
+        <name>PRY_acronym</name>
         <rename/>
       </field>
       <field>

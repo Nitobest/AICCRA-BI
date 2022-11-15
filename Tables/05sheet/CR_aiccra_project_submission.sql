@@ -1,4 +1,5 @@
--- marloBI.aiccra_project_submission definition
+-- aiccra_project_submission definition
+DROP TABLE if exists `aiccra_project_submission`;
 
 CREATE TABLE `aiccra_project_submission` (
   `CRP` varchar(50) NOT NULL,
@@ -26,7 +27,8 @@ CREATE TABLE `aiccra_project_submission` (
   `indicator_ID_2` varchar(22) DEFAULT NULL,
   `missing fields` text,
   `is_evaluated` varchar(3) NOT NULL DEFAULT '',
-  `updated_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_date` datetime -- NOT NULL DEFAULT '01-01-00 00:00:00'
+  ,
   `Phase` longtext NOT NULL,
   `phase_name` text NOT NULL,
   `phase_year` int NOT NULL

@@ -5,6 +5,7 @@ CREATE TABLE `stg_aiccra_deliverables` (
    `PRY_ID` varchar(20) DEFAULT NULL,
    `PRY_composeID` varchar(21) DEFAULT NULL,
    `PRY_title` longtext,
+   `PRY_acronym` text,
    `DLV_ID` bigint(20) DEFAULT NULL,
    `DLV_composeID` varchar(21) DEFAULT NULL,
    `DLV_Title` text,
