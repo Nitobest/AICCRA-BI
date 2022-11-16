@@ -574,6 +574,7 @@
 , cited_by_weibo_users
 , cited_by_wikipedia_pages
 , info_type
+, is_IPI23_related
 , updated_date
 FROM stg_aiccra_deliverables_numeric_data
 </sql>
@@ -677,10 +678,10 @@ FROM stg_aiccra_deliverables_numeric_data
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
-        <type>Boolean</type>
+        <type>String</type>
         <storagetype>normal</storagetype>
         <name>has_participants</name>
-        <length>-1</length>
+        <length>16383</length>
         <precision>-1</precision>
         <origin>Load stg deliverables_numeric_data</origin>
         <comments>has_participants</comments>
@@ -1367,6 +1368,29 @@ FROM stg_aiccra_deliverables_numeric_data
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>is_IPI23_related</name>
+        <length>10</length>
+        <precision>-1</precision>
+        <origin>Load stg deliverables_numeric_data</origin>
+        <comments>is_IPI23_related</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
         <type>Timestamp</type>
         <storagetype>normal</storagetype>
         <name>updated_date</name>
@@ -1418,143 +1442,147 @@ FROM stg_aiccra_deliverables_numeric_data
     <fields>
       <field>
         <name>DLV_ID</name>
-        <rename>DLV_ID</rename>
+        <rename/>
       </field>
       <field>
         <name>DLV_composeID</name>
-        <rename>DLV_composeID</rename>
+        <rename/>
       </field>
       <field>
         <name>DLV_year</name>
-        <rename>DLV_year</rename>
+        <rename/>
       </field>
       <field>
         <name>id_phase</name>
-        <rename>id_phase</rename>
+        <rename/>
       </field>
       <field>
         <name>has_participants</name>
-        <rename>has_participants</rename>
+        <rename/>
       </field>
       <field>
         <name>estimated_participants</name>
-        <rename>estimated_participants</rename>
+        <rename/>
       </field>
       <field>
         <name>total_participants</name>
-        <rename>total_participants</rename>
+        <rename/>
       </field>
       <field>
         <name>estimated_females</name>
-        <rename>estimated_females</rename>
+        <rename/>
       </field>
       <field>
         <name>total_females</name>
-        <rename>total_females</rename>
+        <rename/>
       </field>
       <field>
         <name>dont_know_female</name>
-        <rename>dont_know_female</rename>
+        <rename/>
       </field>
       <field>
         <name>estimated_african</name>
-        <rename>estimated_african</rename>
+        <rename/>
       </field>
       <field>
         <name>total_african</name>
-        <rename>total_african</rename>
+        <rename/>
       </field>
       <field>
         <name>estimated_youth</name>
-        <rename>estimated_youth</rename>
+        <rename/>
       </field>
       <field>
         <name>total_youth</name>
-        <rename>total_youth</rename>
+        <rename/>
       </field>
       <field>
         <name>altmetric_score</name>
-        <rename>altmetric_score</rename>
+        <rename/>
       </field>
       <field>
         <name>cited_by_posts</name>
-        <rename>cited_by_posts</rename>
+        <rename/>
       </field>
       <field>
         <name>cited_by_delicious</name>
-        <rename>cited_by_delicious</rename>
+        <rename/>
       </field>
       <field>
         <name>cited_by_facebook_pages</name>
-        <rename>cited_by_facebook_pages</rename>
+        <rename/>
       </field>
       <field>
         <name>cited_by_blogs</name>
-        <rename>cited_by_blogs</rename>
+        <rename/>
       </field>
       <field>
         <name>cited_by_forum_users</name>
-        <rename>cited_by_forum_users</rename>
+        <rename/>
       </field>
       <field>
         <name>cited_by_google_plus_users</name>
-        <rename>cited_by_google_plus_users</rename>
+        <rename/>
       </field>
       <field>
         <name>cited_by_linkedin_users</name>
-        <rename>cited_by_linkedin_users</rename>
+        <rename/>
       </field>
       <field>
         <name>cited_by_news_outlets</name>
-        <rename>cited_by_news_outlets</rename>
+        <rename/>
       </field>
       <field>
         <name>cited_by_peer_review_sites</name>
-        <rename>cited_by_peer_review_sites</rename>
+        <rename/>
       </field>
       <field>
         <name>cited_by_pinterest_users</name>
-        <rename>cited_by_pinterest_users</rename>
+        <rename/>
       </field>
       <field>
         <name>cited_by_policies</name>
-        <rename>cited_by_policies</rename>
+        <rename/>
       </field>
       <field>
         <name>cited_by_stack_exchange_resources</name>
-        <rename>cited_by_stack_exchange_resources</rename>
+        <rename/>
       </field>
       <field>
         <name>cited_by_reddit_users</name>
-        <rename>cited_by_reddit_users</rename>
+        <rename/>
       </field>
       <field>
         <name>cited_by_research_highlight_platforms</name>
-        <rename>cited_by_research_highlight_platforms</rename>
+        <rename/>
       </field>
       <field>
         <name>cited_by_twitter_users</name>
-        <rename>cited_by_twitter_users</rename>
+        <rename/>
       </field>
       <field>
         <name>cited_by_youtube_channels</name>
-        <rename>cited_by_youtube_channels</rename>
+        <rename/>
       </field>
       <field>
         <name>cited_by_weibo_users</name>
-        <rename>cited_by_weibo_users</rename>
+        <rename/>
       </field>
       <field>
         <name>cited_by_wikipedia_pages</name>
-        <rename>cited_by_wikipedia_pages</rename>
+        <rename/>
       </field>
       <field>
         <name>updated_date</name>
-        <rename>updated_date</rename>
+        <rename/>
+      </field>
+      <field>
+        <name>is_IPI23_related</name>
+        <rename/>
       </field>
       <field>
         <name>info_type</name>
-        <rename>info_type</rename>
+        <rename/>
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>

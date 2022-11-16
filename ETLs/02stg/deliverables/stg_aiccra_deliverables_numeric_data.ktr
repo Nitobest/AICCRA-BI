@@ -649,7 +649,8 @@ End is_formal
 	,ifnull(dai.cited_by_wikipedia_pages,0) cited_by_wikipedia_pages
 -- , ritt.name training_term_name
 -- ,dp.is_active 
-	, if (dp.has_participants and dai.score is not null, "Ambos", if(dai.score is not null, "Altmetric", if(dp.has_participants, "Capdev", "Ninguno")) ) info_type
+	, if (not(isnull(pout.description)) and dai.score is not null, "Ambos", if(dai.score is not null, "Altmetric", if(not(isnull(pout.description)), "Capdev", "Ninguno")) ) info_type
+	, if(isnull(pout.description), "No", "Yes") is_IPI23_related
 	,sysdate() updated_date
 from deliverables d
 join deliverables_info di on di.deliverable_id = d.id and di.is_active 
@@ -660,12 +661,13 @@ left join rep_ind_type_participants ritp  on ritp.id = dp.rep_ind_type_participa
 left join rep_ind_type_activities rita on rita.id  = dp.rep_ind_type_activity_id 
 -- left join rep_ind_training_terms ritt  on ritt.id = dp.rep_ind_training_term 
 left join deliverable_altmetric_info dai on dai.deliverable_id = di.deliverable_id and dai.phase_id = di.id_phase 
+left join deliverable_crp_outcomes dco on dco.deliverable_id = di.deliverable_id and dco.id_phase = di.id_phase 
+LEFT JOIN crp_program_outcomes pout on pout.id = dco.crp_outcome_id and pout.acronym = 'IPI 2.3'
 where d.is_active
 -- and di.id_phase = 406
 -- and dai.score  is not null
 -- and has_participants
-;
-</sql>
+;</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -1440,6 +1442,29 @@ where d.is_active
         <precision>-1</precision>
         <origin>Load deliverables_numeric_data</origin>
         <comments>info_type</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>is_IPI23_related</name>
+        <length>3</length>
+        <precision>-1</precision>
+        <origin>Load deliverables_numeric_data</origin>
+        <comments>is_IPI23_related</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>

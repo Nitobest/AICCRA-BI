@@ -40,6 +40,7 @@ CREATE TABLE `stg_aiccra_deliverables_numeric_data` (
  `cited_by_weibo_users` bigint DEFAULT NULL,
  `cited_by_wikipedia_pages` bigint DEFAULT NULL,
  `info_type` text default null,
+ `is_IPI23_related` char(10) default "No",
  `updated_date` timestamp NULL DEFAULT null
   ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4
  ;
