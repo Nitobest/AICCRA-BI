@@ -553,6 +553,7 @@ DLV_partnerName, DLV_partnerPerson, PPA_partner_name, `Role`, FS_ID, FS_composeI
 reg_name, prg_name, CoA_id, CoA_DESC, indicator_pk, contribution_pk, indicator_id, indicator_code, `Indicator`, loc_region, 
 gender_level, youth_level, isi_publication, DLV_isOpenAcces, DLV_planned, activity_id, activity_title, activity_leader, Link, 
 altmetric_score, almetric_details, image_small, already_disseminated, dissemination_channel, dissemination_URL, last_updated_altmetric, 
+id_phase_dlv,
 last_sync_almetric,updated_date
 FROM stg_aiccra_deliverables
 order by DLV_ID, DLV_year
@@ -2081,18 +2082,23 @@ order by DLV_ID, DLV_year
     <fields>
       <field>
         <name>cluster_owner</name>
+        <rename/>
       </field>
       <field>
         <name>PRY_ID</name>
+        <rename/>
       </field>
       <field>
         <name>PRY_composeID</name>
+        <rename/>
       </field>
       <field>
         <name>PRY_title</name>
+        <rename/>
       </field>
       <field>
         <name>PRY_acronym</name>
+        <rename/>
       </field>
       <field>
         <name>DLV_ID_1</name>
@@ -2104,9 +2110,11 @@ order by DLV_ID, DLV_year
       </field>
       <field>
         <name>DLV_Title</name>
+        <rename/>
       </field>
       <field>
         <name>DLV_Description</name>
+        <rename/>
       </field>
       <field>
         <name>DLV_year_1</name>
@@ -2114,147 +2122,199 @@ order by DLV_ID, DLV_year
       </field>
       <field>
         <name>DLV_Category</name>
+        <rename/>
       </field>
       <field>
         <name>DLV_subCategory</name>
+        <rename/>
       </field>
       <field>
         <name>DLV_Status</name>
+        <rename/>
       </field>
       <field>
         <name>DLV_geographicScope</name>
+        <rename/>
       </field>
       <field>
         <name>DLV_location</name>
+        <rename/>
       </field>
       <field>
         <name>DLV_partnerName</name>
+        <rename/>
       </field>
       <field>
         <name>DLV_partnerPerson</name>
+        <rename/>
       </field>
       <field>
         <name>PPA_partner_name</name>
+        <rename/>
       </field>
       <field>
         <name>Role</name>
+        <rename/>
       </field>
       <field>
         <name>FS_ID</name>
+        <rename/>
       </field>
       <field>
         <name>FS_composeID</name>
+        <rename/>
       </field>
       <field>
         <name>FS_title</name>
+        <rename/>
       </field>
       <field>
         <name>FS_type</name>
+        <rename/>
       </field>
       <field>
         <name>Management_liason</name>
+        <rename/>
       </field>
       <field>
         <name>reg_name</name>
+        <rename/>
       </field>
       <field>
         <name>prg_name</name>
+        <rename/>
       </field>
       <field>
         <name>CoA_id</name>
+        <rename/>
       </field>
       <field>
         <name>CoA_DESC</name>
+        <rename/>
       </field>
       <field>
         <name>indicator_pk</name>
+        <rename/>
       </field>
       <field>
         <name>contribution_pk</name>
+        <rename/>
       </field>
       <field>
         <name>indicator_id</name>
+        <rename/>
       </field>
       <field>
         <name>indicator_code</name>
+        <rename/>
       </field>
       <field>
         <name>Indicator</name>
+        <rename/>
       </field>
       <field>
         <name>loc_region</name>
+        <rename/>
       </field>
       <field>
         <name>gender_level</name>
+        <rename/>
       </field>
       <field>
         <name>youth_level</name>
+        <rename/>
       </field>
       <field>
         <name>isi_publication</name>
+        <rename/>
       </field>
       <field>
         <name>DLV_isOpenAcces</name>
+        <rename/>
       </field>
       <field>
         <name>DLV_planned</name>
+        <rename/>
       </field>
       <field>
         <name>activity_id</name>
+        <rename/>
       </field>
       <field>
         <name>activity_title</name>
+        <rename/>
       </field>
       <field>
         <name>activity_leader</name>
+        <rename/>
       </field>
       <field>
         <name>Link</name>
+        <rename/>
       </field>
       <field>
         <name>doi</name>
+        <rename/>
       </field>
       <field>
         <name>altmetric_score</name>
+        <rename/>
       </field>
       <field>
         <name>almetric_details</name>
+        <rename/>
       </field>
       <field>
         <name>image_small</name>
+        <rename/>
       </field>
       <field>
         <name>already_disseminated</name>
+        <rename/>
       </field>
       <field>
         <name>dissemination_channel</name>
+        <rename/>
       </field>
       <field>
         <name>dissemination_URL</name>
+        <rename/>
       </field>
       <field>
         <name>is_fair</name>
+        <rename/>
       </field>
       <field>
         <name>is_Findable</name>
+        <rename/>
       </field>
       <field>
         <name>is_Accessible</name>
+        <rename/>
       </field>
       <field>
         <name>is_Interoperable</name>
+        <rename/>
       </field>
       <field>
         <name>is_Reusable</name>
+        <rename/>
       </field>
       <field>
         <name>updated_date</name>
+        <rename/>
       </field>
       <field>
         <name>last_updated_altmetric</name>
+        <rename/>
+      </field>
+      <field>
+        <name>id_phase_dlv</name>
+        <rename/>
       </field>
       <field>
         <name>last_sync_almetric</name>
+        <rename/>
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>

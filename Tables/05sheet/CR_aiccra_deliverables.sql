@@ -58,5 +58,6 @@ CREATE TABLE `aiccra_deliverables` (
    `is_Accessible`	varchar(4) default null,
    `is_Interoperable`	varchar(4) default null,
    `is_Reusable`	varchar(4) default null,
+   `id_phase_dlv` bigint(20),
    `updated_date` timestamp DEFAULT NULL
  ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4

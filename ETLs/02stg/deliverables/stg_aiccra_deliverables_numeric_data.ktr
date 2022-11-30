@@ -669,6 +669,7 @@ left join (select distinct dicd.deliverable_id, dicd.id_phase, pout.acronym, "Ye
       and pout.acronym = 'IPI 2.3' 
       and pout.is_active ) dipi on dipi.deliverable_id = di.deliverable_id and dipi.id_phase = di.id_phase 
 where d.is_active
+-- and d.id = 24330
 -- and di.id_phase = 406
 -- and dai.score  is not null
 -- and has_participants

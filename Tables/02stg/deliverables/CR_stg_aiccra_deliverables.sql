@@ -52,5 +52,6 @@ CREATE TABLE `stg_aiccra_deliverables` (
    `dissemination_URL`  varchar(600) DEFAULT NULL,
    `last_updated_altmetric` timestamp DEFAULT NULL,  
    `last_sync_almetric` timestamp DEFAULT NULL,
+   `id_phase_dlv` bigint(20),
    `updated_date` timestamp DEFAULT NULL
  ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4
