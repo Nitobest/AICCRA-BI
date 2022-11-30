@@ -655,7 +655,7 @@
         , ifnull(pout.composed_id,'NP') indicator_id        
         ,if(pi.administrative = 1,'Not Applicable',SUBSTRING_INDEX(pout.description,':',1)) "indicator_code" 
         ,if(pi.administrative = 1,'Not Applicable',ifnull(pout.description,' Not provided')) Indicator
-        ,ifnull(region.name,'Not Provided') loc_region
+        ,ifnull(region.name, if(ifnull(geo.`name`,'Not Defined')= 'Regional', 'Not Provided', 'Not Applicable')) loc_region
         , ifnull(gender.powb_name, 'Not Provided') gender_level
         , ifnull(youth.powb_name, 'Not Provided') youth_level
         -- ,get_deliverable_metadata (di.deliverable_id,di.id_phase,'marlo.doi') as 'DOI'
