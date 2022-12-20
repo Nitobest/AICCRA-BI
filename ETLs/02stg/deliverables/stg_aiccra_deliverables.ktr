@@ -610,7 +610,7 @@
         di.title as 'DLV_Title',
         di.description as 'DLV_Description', 
         ifnull(if(di.new_expected_year=-1,null,di.new_expected_year), di.`year`) as 'DLV_year',
-        dtParent.name  as 'DLV_Category', 
+        ifnull(dtParent.name,'Not Defined')  as 'DLV_Category', 
         ifnull(dt.name,'Not Defined') as 'DLV_subCategory',
         ifnull(gs.name, 'Not Defined')  AS "DLV_Status",
         ifnull(geo.`name`,'Not Defined')   as 'DLV_geographicScope',
