@@ -610,21 +610,21 @@
         di.title as 'DLV_Title',
         di.description as 'DLV_Description', 
         ifnull(if(di.new_expected_year=-1,null,di.new_expected_year), di.`year`) as 'DLV_year',
-        ifnull(dtParent.name,'Not Defined')  as 'DLV_Category', 
-        ifnull(dt.name,'Not Defined') as 'DLV_subCategory',
-        ifnull(gs.name, 'Not Defined')  AS "DLV_Status",
-        ifnull(geo.`name`,'Not Defined')   as 'DLV_geographicScope',
-        ifnull(loc.`name`,'Not Defined')  as 'DLV_location',
+        ifnull(dtParent.name,'Not Provided')  as 'DLV_Category', 
+        ifnull(dt.name,'Not Provided') as 'DLV_subCategory',
+        ifnull(gs.name, 'Not Provided')  AS "DLV_Status",
+        ifnull(geo.`name`,'Not Provided')   as 'DLV_geographicScope',
+        ifnull(loc.`name`,'Not Provided')  as 'DLV_location',
         -- ifnull(ccm.`name`,'Not Defined') 'DLV_CrossCuttingDimension',
         -- ifnull(ccml.powb_name,'Not Defined') as 'DLV_CrossCuttingScore',
-        if(p.id is null,'Not applicable',ifnull(ins.name,'Not Defined')) as 'DLV_partnerName',
+        if(p.id is null,'Not applicable',ifnull(ins.name,'Not Provided')) as 'DLV_partnerName',
         if(p.id is null,'Not applicable',if(usr.id is null,'Not Defined',concat(usr.first_name,' ', usr.last_name,' &lt;',usr.email,'>')))  as 'DLV_partnerPerson',
         if(isppa.institution_id is not null
             ,if(p.id is null
                 ,'Not applicable'
                 ,ifnull(ifnull(concat(ins.acronym,'-',ins.name),ins.name),'Not Defined')
                 )
-            ,ifnull(ifnull(concat(ippa.acronym,'-',ippa.name),ippa.name),'Not provided')
+            ,ifnull(ifnull(concat(ippa.acronym,'-',ippa.name),ippa.name),'Not Provided')
             )PPA_partner_name,
         if(par.deliverable_partner_type_id = 1,'Leader','Contributor') Role,
         fs.funding_source_id as 'FS_ID',
