@@ -581,7 +581,7 @@
   <order>
     <hop>
       <from>Load oicrs</from>
-      <to>aiccra_oicrs_pendiente_tabla</to>
+      <to>aiccra_oicrs</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -684,6 +684,7 @@ CONCAT(
 ,ifnull(climate.`name`,'Not Provided') "climate"
 ,ifnull(pesi.describe_climate_change,'Not Provided') "climate_relevance_despcription"
 ,ifnull(pesi.contacts,'Not Provided') "contact_person"
+,sysdate() updated_date
 -- ,pespo1.indicator_acronym
 -- ,pespo1.indicator_description
 FROM project_expected_studies pes 
@@ -1630,6 +1631,29 @@ and not (ifnull(pesi.title,'') = '' and mat.`name` is null)
         <date_format_timezone>America/Bogota</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
+      <value-meta>
+        <type>Timestamp</type>
+        <storagetype>normal</storagetype>
+        <name>updated_date</name>
+        <length>0</length>
+        <precision>-1</precision>
+        <origin>Load oicrs</origin>
+        <comments>updated_date</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
     </row-meta>
     <attributes/>
     <cluster_schema/>
@@ -1646,7 +1670,7 @@ and not (ifnull(pesi.title,'') = '' and mat.`name` is null)
     </GUI>
   </step>
   <step>
-    <name>aiccra_oicrs_pendiente_tabla</name>
+    <name>aiccra_oicrs</name>
     <type>TableOutput</type>
     <description/>
     <distribute>Y</distribute>

@@ -1,3 +1,5 @@
+drop table if exists aiccra_oicrs;
+
 CREATE TABLE aiccra_oicrs
 (
   oicr_id BIGINT
@@ -37,5 +39,6 @@ CREATE TABLE aiccra_oicrs
 , climate TEXT
 , climate_relevance_despcription TEXT
 , contact_person TEXT
+, updated_date datetime
 )
 ;
