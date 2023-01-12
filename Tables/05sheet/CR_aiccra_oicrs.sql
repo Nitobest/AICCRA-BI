@@ -40,5 +40,8 @@ CREATE TABLE aiccra_oicrs
 , climate_relevance_despcription TEXT
 , contact_person TEXT
 , updated_date datetime
+, indicator_acronym varchar(50)
+, indicator_description text
+, indicator_id bigint
 )
 ;
