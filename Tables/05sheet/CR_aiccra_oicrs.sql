@@ -4,6 +4,9 @@ CREATE TABLE aiccra_oicrs
 (
   oicr_id BIGINT
 , cluster_id BIGINT
+, cluster_compose_id varchar(21)
+, cluster_acronym text
+, cluster_title text
 , cluster_owner_type VARCHAR(10)
 , parameter_value DECIMAL(23)
 , link_cluster_id text
@@ -43,5 +46,7 @@ CREATE TABLE aiccra_oicrs
 , indicator_acronym varchar(50)
 , indicator_description text
 , indicator_id bigint
+, indicator_pk varchar(50)
+, contribution_pk varchar(255)
 )
 ;

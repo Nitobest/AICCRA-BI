@@ -601,6 +601,9 @@
 -- gu.acronym "Program",
 pes.id oicr_id,
 p.id cluster_id,
+concat('C',p.id) cluster_compose_id,
+pi2.acronym cluster_acronym,
+pi2.title cluster_title,
 pesp1.cluster_owner_type,
 bpacc.parameter_value,
 CONCAT(
@@ -688,8 +691,14 @@ CONCAT(
 ,pespo1.indicator_acronym
 ,pespo1.indicator_description
 ,pespo1.outcome_id indicator_id
--- ,pespo1.indicator_acronym
--- ,pespo1.indicator_description
+,ifnull(concat(pespo1.composed_id,
+                                        '_',
+                                        pesi.`year` 
+                        ),'NP') indicator_pk
+        ,   ifnull(concat(pi2.project_id,'_',pespo1.composed_id,
+                                        '_',
+                                        pesi.`year`
+                        ),'NP') contribution_pk
 FROM project_expected_studies pes 
 INNER JOIN project_expected_study_info pesi ON pesi.project_expected_study_id = pes.id 
 INNER JOIN (select parameter_name, cast(parameter_value as double) parameter_value from bi_parameters where parameter_name='BI_data_phase' ) bpacc on bpacc.parameter_name= 'BI_data_phase'
@@ -712,6 +721,7 @@ inner join (select pesi.id_phase, pes.id, pes.project_id , "Owner" cluster_owner
 			and pespr.id_phase =cast(bpa1.parameter_value as double) -- bpa1.parameter_value 
 			and pespr.project_id != pes.project_id) pesp1 on pesp1.id_phase = pesi.id_phase  and pesp1.id = pesi.project_expected_study_id 
 left join projects p on p.id = pesp1.project_id and p.is_active 
+left join projects_info pi2 on pi2.project_id = pesp1.project_id and pi2.id_phase = pesp1.id_phase and pi2.is_active
 left join study_types typ on typ.id = pesi.study_type_id
 LEFT JOIN general_statuses sta on sta.id = pesi.`status`
 LEFT JOIN evidence_tags tag on tag.id =pesi.evidence_tag_id
@@ -754,13 +764,27 @@ LEFT JOIN project_innovation_info inno on inno.project_innovation_id =pesin.proj
 -- LEFT JOIN expected_study_projects pespr on pespr.expected_id = pesi.project_expected_study_id and pespr.id_phase =pesi.id_phase and pespr.is_active
 -- 
 -- LEFT JOIN project_expected_study_project_outcomes pespo on pespo.expected_id = pesi.project_expected_study_id and pespo.id_phase = pesi.id_phase 
-LEFT JOIN (select po.project_id , po.outcome_id, pespo.id, pespo.expected_id, pespo.project_outcome_id, pespo.id_phase, cpo.acronym indicator_acronym, cpo.description indicator_description
-	from project_expected_study_project_outcomes pespo 
-	inner join project_outcomes po on po.id = pespo.project_outcome_id and po.id_phase = pespo.id_phase 
-	inner join crp_program_outcomes cpo on cpo.id = po.outcome_id and cpo.is_active 
-	inner join bi_parameters bpa1 on bpa1.parameter_name='BI_data_phase'  
-	where pespo.id_phase = cast(bpa1.parameter_value as double) -- bpa1.parameter_value  
-	) pespo1 on pespo1.id_phase = pesi.id_phase and pespo1.expected_id = pesi.project_expected_study_id
+-- LEFT JOIN (select po.project_id , po.outcome_id, pespo.id, pespo.expected_id, pespo.project_outcome_id, pespo.id_phase, cpo.acronym indicator_acronym, cpo.description indicator_description
+-- 	from project_expected_study_project_outcomes pespo 
+-- 	inner join project_outcomes po on po.id = pespo.project_outcome_id and po.id_phase = pespo.id_phase 
+-- 	inner join crp_program_outcomes cpo on cpo.id = po.outcome_id and cpo.is_active 
+-- 	inner join bi_parameters bpa1 on bpa1.parameter_name='BI_data_phase'  
+-- 	where pespo.id_phase = cast(bpa1.parameter_value as double) -- bpa1.parameter_value  
+-- 	) pespo1 on pespo1.id_phase = pesi.id_phase and pespo1.expected_id = pesi.project_expected_study_id
+LEFT JOIN (select pesi2.project_expected_study_id , pesi2.id_phase,  tu.name target_unit, 
+ po.project_id , po.outcome_id, -- pespo.id, pespo.expected_id, 
+ pespo.project_outcome_id, 
+ -- pespo.id_phase, 
+ cpo.acronym indicator_acronym, cpo.description indicator_description, cpo.composed_id,
+ pm.setted_value , pm.achieved_value  	
+	from project_expected_study_info pesi2
+ 	left join project_expected_study_project_outcomes pespo on pespo.expected_id = pesi2.project_expected_study_id and pespo.id_phase = pesi2.id_phase 
+ 	left join project_outcomes po on po.id = pespo.project_outcome_id and po.is_active -- and po.id_phase = pespo.id_phase
+ 	left join crp_program_outcomes cpo on cpo.id = po.outcome_id and cpo.is_active 
+ 	left join crp_milestones cm on cm.crp_program_outcome_id = cpo.id and cm.`year` = pesi2.`year` and cm.is_active
+ 	left join srf_target_units tu on cm.target_unit_id = tu.id 
+ 	left join project_milestones pm on pm.project_outcome_id = po.id and pm.crp_milestone_id = cm.id and pm.is_active and pm.year &lt;&gt; -1
+	) pespo1 on pespo1.id_phase = pesi.id_phase and pespo1.project_expected_study_id = pesi.project_expected_study_id		
 WHERE  pes.is_active
 and bpacc.parameter_name ='BI_data_phase'
 and ph.id = cast(bpacc.parameter_value as double) 
@@ -770,7 +794,7 @@ and not (ifnull(pesi.title,'') = '' and mat.`name` is null)
 -- AND ph.`year` = 2023
 -- and ifnull(pesi.title,'') != '' 
 -- and pes.project_id = 270
--- and pes.id = 2122
+-- and pes.id = 3534 -- 2122
 -- 
 -- GROUP BY pesi.project_expected_study_id, pesi.id_phase
 -- order by 1,5 desc,pes.id
@@ -815,6 +839,75 @@ and not (ifnull(pesi.title,'') = '' and mat.`name` is null)
         <origin>Load oicrs</origin>
         <comments>cluster_id</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>cluster_compose_id</name>
+        <length>21</length>
+        <precision>-1</precision>
+        <origin>Load oicrs</origin>
+        <comments>cluster_compose_id</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>cluster_acronym</name>
+        <length>21845</length>
+        <precision>-1</precision>
+        <origin>Load oicrs</origin>
+        <comments>cluster_acronym</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>cluster_title</name>
+        <length>21845</length>
+        <precision>-1</precision>
+        <origin>Load oicrs</origin>
+        <comments>cluster_title</comments>
+        <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
         <currency_symbol/>
@@ -1712,6 +1805,52 @@ and not (ifnull(pesi.title,'') = '' and mat.`name` is null)
         <origin>Load oicrs</origin>
         <comments>indicator_id</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>indicator_pk</name>
+        <length>32</length>
+        <precision>-1</precision>
+        <origin>Load oicrs</origin>
+        <comments>indicator_pk</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>contribution_pk</name>
+        <length>53</length>
+        <precision>-1</precision>
+        <origin>Load oicrs</origin>
+        <comments>contribution_pk</comments>
+        <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
         <currency_symbol/>
