@@ -48,5 +48,6 @@ CREATE TABLE aiccra_oicrs
 , indicator_id bigint
 , indicator_pk varchar(50)
 , contribution_pk varchar(255)
+, center_name TEXT
 )
 ;

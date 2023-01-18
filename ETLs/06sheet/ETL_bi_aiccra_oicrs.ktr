@@ -700,6 +700,7 @@ CONCAT(
                                         '_',
                                         pesi.`year`
                         ),'NP') contribution_pk
+,if(pesi.study_type_id =1,ifnull(pescen2.center_name,'Not Provided'), 'Not Applicable') "center_name"
 FROM project_expected_studies pes 
 INNER JOIN project_expected_study_info pesi ON pesi.project_expected_study_id = pes.id 
 INNER JOIN (select parameter_name, cast(parameter_value as double) parameter_value from bi_parameters where parameter_name='BI_data_phase' ) bpacc on bpacc.parameter_name= 'BI_data_phase'
@@ -776,7 +777,7 @@ LEFT JOIN (select pesi2.project_expected_study_id , pesi2.id_phase,  tu.name tar
  po.project_id , po.outcome_id, -- pespo.id, pespo.expected_id, 
  pespo.project_outcome_id, 
  -- pespo.id_phase, 
- cpo.acronym indicator_acronym, cpo.description indicator_description, cpo.composed_id,
+ cpo.acronym indicator_acronym, cpo.description indicator_description, cpo.composed_id, cm.title milestone, pm.year milestone_year,
  pm.setted_value , pm.achieved_value  	
 	from project_expected_study_info pesi2
  	left join project_expected_study_project_outcomes pespo on pespo.expected_id = pesi2.project_expected_study_id and pespo.id_phase = pesi2.id_phase 
@@ -786,6 +787,14 @@ LEFT JOIN (select pesi2.project_expected_study_id , pesi2.id_phase,  tu.name tar
  	left join srf_target_units tu on cm.target_unit_id = tu.id 
  	left join project_milestones pm on pm.project_outcome_id = po.id and pm.crp_milestone_id = cm.id and pm.is_active and pm.year &lt;&gt; -1
 	) pespo1 on pespo1.id_phase = pesi.id_phase and pespo1.project_expected_study_id = pesi.project_expected_study_id		
+-- Centers
+left join (select pescen.expected_id, pescen.id_phase, -- ice.name center_name,
+ifnull(concat(if (ice.acronym is not null, concat(ice.acronym,'-'), ''), ice.name),'Not Provided') center_name
+		   from project_expected_study_centers pescen 
+		   join institutions ice on ice.id = pescen.institution_id 
+		   join bi_parameters bp11 on bp11.parameter_name ='BI_data_phase'
+		   where pescen.id_phase = cast(bp11.parameter_value as double)  
+		   ) pescen2 on pescen2.expected_id = pesi.project_expected_study_id and pescen2.id_phase = pesi.id_phase
 WHERE  pes.is_active
 and bpacc.parameter_name ='BI_data_phase'
 and ph.id = cast(bpacc.parameter_value as double) 
@@ -795,12 +804,11 @@ and not (ifnull(pesi.title,'') = '' and mat.`name` is null)
 -- AND ph.`year` = 2023
 -- and ifnull(pesi.title,'') != '' 
 -- and pes.project_id = 270
--- and pes.id = 3534 -- 2122
+-- and pes.id = 3526 -- 3534 -- 2122
 -- 
 -- GROUP BY pesi.project_expected_study_id, pesi.id_phase
 -- order by 1,5 desc,pes.id
-;
-</sql>
+;</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -1851,6 +1859,29 @@ and not (ifnull(pesi.title,'') = '' and mat.`name` is null)
         <precision>-1</precision>
         <origin>Load oicrs</origin>
         <comments>contribution_pk</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>center_name</name>
+        <length>65581</length>
+        <precision>-1</precision>
+        <origin>Load oicrs</origin>
+        <comments>center_name</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
