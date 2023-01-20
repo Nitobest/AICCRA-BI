@@ -711,6 +711,7 @@
  	from project_deliverable_shared pds -- on di.id_phase = pds.id_phase and di.deliverable_id = pds.deliverable_id
  	join bi_parameters bpa2 on bpa2.parameter_name='BI_data_phase'
  	JOIN phases ph2 on ph2.id = pds.id_phase and ph2.id = bpa2.parameter_value
+	where pds.is_active
  	-- where pds.id_phase = 406
  	) pds1 on pds1.id_phase = di.id_phase and pds1.deliverable_id = di.deliverable_id  
 		 LEFT JOIN projects p ON p.id = pds1.project_id AND p.is_active
@@ -2017,8 +2018,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>96</xloc>
-      <yloc>48</yloc>
+      <xloc>208</xloc>
+      <yloc>352</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2061,8 +2062,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>416</xloc>
-      <yloc>48</yloc>
+      <xloc>752</xloc>
+      <yloc>352</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
