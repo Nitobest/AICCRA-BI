@@ -50,5 +50,7 @@ CREATE TABLE aiccra_oicrs
 , contribution_pk varchar(255)
 , center_name TEXT
 , shared_clusters TEXT
+, owner_cluster_id bigint
+, owner_cluster_acronym text
 )
 ;

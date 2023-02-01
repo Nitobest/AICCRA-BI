@@ -699,6 +699,8 @@ CONCAT(
                         ),'NP') contribution_pk
 ,if(pesi.study_type_id =1,ifnull(pescen2.center_name,'Not Provided'), 'Not Applicable') "center_name"
 ,sclu.shared_clusters
+,pesp1.owner_cluster_id
+,pi3.acronym owner_cluster_acronym
 FROM project_expected_studies pes 
 INNER JOIN project_expected_study_info pesi ON pesi.project_expected_study_id = pes.id 
 INNER JOIN (select parameter_name, cast(parameter_value as double) parameter_value from bi_parameters where parameter_name='BI_data_phase' ) bpacc on bpacc.parameter_name= 'BI_data_phase'
@@ -711,14 +713,14 @@ where gu1.is_active
 and phg.id = ifnull(get_max_open_phase(gu1.id),0)
 ) miph on miph.gu_id = gu.id
 -- projects: owner and shared
-inner join (select pesi.id_phase, pes.id, pes.project_id , "Owner" cluster_owner_type
+inner join (select pesi.id_phase, pes.id, pes.project_id , "Owner" cluster_owner_type, pes.project_id owner_cluster_id
 			FROM project_expected_studies pes	
 			inner join bi_parameters bpa1 on bpa1.parameter_name='BI_data_phase'
 			INNER JOIN project_expected_study_info pesi ON pesi.project_expected_study_id = pes.id 
 			where pes.is_active 
 			and pesi.id_phase = cast(bpa1.parameter_value as double)
 			union 
-			select pespr.id_phase, pes.id, pespr.project_id , "Shared" cluster_owner_type
+			select pespr.id_phase, pes.id, pespr.project_id , "Shared" cluster_owner_type, pes.project_id owner_cluster_id
 			from project_expected_studies pes
 			inner join bi_parameters bpa1 on bpa1.parameter_name='BI_data_phase'
 			inner JOIN expected_study_projects pespr on pespr.expected_id = pes.id and pespr.is_active 
@@ -727,6 +729,7 @@ inner join (select pesi.id_phase, pes.id, pes.project_id , "Owner" cluster_owner
 			and pespr.project_id != pes.project_id) pesp1 on pesp1.id_phase = pesi.id_phase  and pesp1.id = pesi.project_expected_study_id 
 left join projects p on p.id = pesp1.project_id and p.is_active 
 left join projects_info pi2 on pi2.project_id = pesp1.project_id and pi2.id_phase = pesp1.id_phase and pi2.is_active
+left join projects_info pi3 on pi3.project_id = pesp1.owner_cluster_id and pi3.id_phase = pesp1.id_phase and pi3.is_active
 left join study_types typ on typ.id = pesi.study_type_id
 LEFT JOIN general_statuses sta on sta.id = pesi.`status`
 LEFT JOIN evidence_tags tag on tag.id =pesi.evidence_tag_id
@@ -824,6 +827,8 @@ and not (ifnull(pesi.title,'') = '' and mat.`name` is null)
 -- GROUP BY pesi.project_expected_study_id, pesi.id_phase
 -- order by 1,5 desc,pes.id
 ;
+
+
 </sql>
     <limit>0</limit>
     <lookup/>
@@ -1921,6 +1926,52 @@ and not (ifnull(pesi.title,'') = '' and mat.`name` is null)
         <precision>-1</precision>
         <origin>Load oicrs</origin>
         <comments>shared_clusters</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>owner_cluster_id</name>
+        <length>15</length>
+        <precision>0</precision>
+        <origin>Load oicrs</origin>
+        <comments>owner_cluster_id</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>owner_cluster_acronym</name>
+        <length>21845</length>
+        <precision>-1</precision>
+        <origin>Load oicrs</origin>
+        <comments>owner_cluster_acronym</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
