@@ -607,34 +607,31 @@ pi2.title cluster_title,
 pesp1.cluster_owner_type,
 bpacc.parameter_value,
 CONCAT(
-	'https://aiccra.marlo.cgiar.org/projects/',
-	gu.acronym,
-	'/studies.do?projectID=',
+	'https://aiccra.marlo.cgiar.org/clusters/AICCRA/',
+	'studies.do?projectID=',
 	pes.project_id,
-	'&amp;phaseID=',
-	max_id_phase.mid_phase
+	'&amp;edit=true&amp;phaseID=',
+	miph.max_id_phase
 ) AS 'link_cluster_id'
 -- 
 -- ,GROUP_CONCAT(distinct concat('C',pespr.project_id) SEPARATOR ', ') "Related Clusters"
 -- 
 ,CONCAT(
-	'https://aiccra.marlo.cgiar.org/projects/',
-	gu.acronym,
-	'/study.do?expectedID=',
+	'https://aiccra.marlo.cgiar.org/clusters/AICCRA/',
+	'study.do?expectedID=',
 	pes.id,
-	'&amp;phaseID=',
-	max_id_phase.mid_phase
+	'&amp;edit=true&amp;phaseID=',
+	miph.max_id_phase
 ) AS "link_oicr_id" -- ,pes.id
 ,if(ifnull(pesi.is_public,1) !=0,
 			CONCAT(
-				'https://aiccra.marlo.cgiar.org/projects/',
-				gu.acronym,
-				'/studySummary.do?studyID=',
+				'https://aiccra.marlo.cgiar.org/projects/AICCRA/',
+				'studySummary.do?studyID=',
 				pes.id,
 				'&amp;cycle=',
-				ph.description,
+				miph.desc_max_id_phase,
 				'&amp;year=',
-				ph.year
+				miph.year_max_id_phase
 			),"Private"
 ) AS "link_pdf_file"
 ,typ.name "study_type"
@@ -701,12 +698,18 @@ CONCAT(
                                         pesi.`year`
                         ),'NP') contribution_pk
 ,if(pesi.study_type_id =1,ifnull(pescen2.center_name,'Not Provided'), 'Not Applicable') "center_name"
+,sclu.shared_clusters
 FROM project_expected_studies pes 
 INNER JOIN project_expected_study_info pesi ON pesi.project_expected_study_id = pes.id 
 INNER JOIN (select parameter_name, cast(parameter_value as double) parameter_value from bi_parameters where parameter_name='BI_data_phase' ) bpacc on bpacc.parameter_name= 'BI_data_phase'
 INNER JOIN phases ph ON ph.id = pesi.id_phase 
 INNER JOIN global_units gu ON gu.id = ph.global_unit_id AND gu.is_active
-INNER JOIN (select gu1.id gu_id, ifnull(get_max_open_phase(gu1.id),0) mid_phase from global_units gu1 where gu1.is_active) max_id_phase on max_id_phase.gu_id = gu.id
+INNER JOIN (select gu1.id gu_id, phg.id max_id_phase, phg.name name_max_id_phase , phg.year year_max_id_phase, phg.description desc_max_id_phase
+from global_units gu1 
+join phases phg on phg.global_unit_id = gu1.id 
+where gu1.is_active
+and phg.id = ifnull(get_max_open_phase(gu1.id),0)
+) miph on miph.gu_id = gu.id
 -- projects: owner and shared
 inner join (select pesi.id_phase, pes.id, pes.project_id , "Owner" cluster_owner_type
 			FROM project_expected_studies pes	
@@ -773,10 +776,10 @@ LEFT JOIN project_innovation_info inno on inno.project_innovation_id =pesin.proj
 -- 	inner join bi_parameters bpa1 on bpa1.parameter_name='BI_data_phase'  
 -- 	where pespo.id_phase = cast(bpa1.parameter_value as double) -- bpa1.parameter_value  
 -- 	) pespo1 on pespo1.id_phase = pesi.id_phase and pespo1.expected_id = pesi.project_expected_study_id
+-- target units
 LEFT JOIN (select pesi2.project_expected_study_id , pesi2.id_phase,  tu.name target_unit, 
  po.project_id , po.outcome_id, -- pespo.id, pespo.expected_id, 
- pespo.project_outcome_id, 
- -- pespo.id_phase, 
+ pespo.project_outcome_id,  -- pespo.id_phase, 
  cpo.acronym indicator_acronym, cpo.description indicator_description, cpo.composed_id, cm.title milestone, pm.year milestone_year,
  pm.setted_value , pm.achieved_value  	
 	from project_expected_study_info pesi2
@@ -795,6 +798,18 @@ ifnull(concat(if (ice.acronym is not null, concat(ice.acronym,'-'), ''), ice.nam
 		   join bi_parameters bp11 on bp11.parameter_name ='BI_data_phase'
 		   where pescen.id_phase = cast(bp11.parameter_value as double)  
 		   ) pescen2 on pescen2.expected_id = pesi.project_expected_study_id and pescen2.id_phase = pesi.id_phase
+-- group shared clusters		   
+left join (select pespr.id_phase , pes2.id pes_id, group_concat(pi4.acronym SEPARATOR ', ') shared_clusters
+from project_expected_studies pes2  
+inner JOIN expected_study_projects pespr on pespr.expected_id = pes2.id and pespr.is_active   
+inner join projects pps on pespr.project_id = pps.id and pps.is_active 
+inner join projects_info pi4 on pi4.project_id = pespr.project_id and pi4.id_phase = pespr.id_phase and pi4.is_active 
+join bi_parameters bp12 on bp12.parameter_name ='BI_data_phase'
+where pes2.is_active 
+and pes2.project_id != pespr.project_id 
+and pespr.id_phase = cast(bp12.parameter_value as double)
+group by pespr.id_phase , pes2.id
+) sclu on sclu.id_phase = pesi.id_phase and sclu.pes_id = pesi.project_expected_study_id 
 WHERE  pes.is_active
 and bpacc.parameter_name ='BI_data_phase'
 and ph.id = cast(bpacc.parameter_value as double) 
@@ -804,11 +819,12 @@ and not (ifnull(pesi.title,'') = '' and mat.`name` is null)
 -- AND ph.`year` = 2023
 -- and ifnull(pesi.title,'') != '' 
 -- and pes.project_id = 270
--- and pes.id = 3526 -- 3534 -- 2122
+-- and pes.id = 3501 -- 3526 -- 3534 -- 2122
 -- 
 -- GROUP BY pesi.project_expected_study_id, pesi.id_phase
 -- order by 1,5 desc,pes.id
-;</sql>
+;
+</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -981,7 +997,7 @@ and not (ifnull(pesi.title,'') = '' and mat.`name` is null)
         <type>String</type>
         <storagetype>normal</storagetype>
         <name>link_cluster_id</name>
-        <length>161</length>
+        <length>127</length>
         <precision>-1</precision>
         <origin>Load oicrs</origin>
         <comments>link_cluster_id</comments>
@@ -1004,7 +1020,7 @@ and not (ifnull(pesi.title,'') = '' and mat.`name` is null)
         <type>String</type>
         <storagetype>normal</storagetype>
         <name>link_oicr_id</name>
-        <length>160</length>
+        <length>126</length>
         <precision>-1</precision>
         <origin>Load oicrs</origin>
         <comments>link_oicr_id</comments>
@@ -1027,7 +1043,7 @@ and not (ifnull(pesi.title,'') = '' and mat.`name` is null)
         <type>String</type>
         <storagetype>normal</storagetype>
         <name>link_pdf_file</name>
-        <length>65694</length>
+        <length>65650</length>
         <precision>-1</precision>
         <origin>Load oicrs</origin>
         <comments>link_pdf_file</comments>
@@ -1882,6 +1898,29 @@ and not (ifnull(pesi.title,'') = '' and mat.`name` is null)
         <precision>-1</precision>
         <origin>Load oicrs</origin>
         <comments>center_name</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>shared_clusters</name>
+        <length>10000</length>
+        <precision>-1</precision>
+        <origin>Load oicrs</origin>
+        <comments>shared_clusters</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
