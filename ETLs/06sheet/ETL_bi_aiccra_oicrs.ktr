@@ -750,7 +750,7 @@ LEFT JOIN rep_ind_gender_youth_focus_levels gender on gender.id = pesi.gender_fo
 LEFT JOIN rep_ind_gender_youth_focus_levels youth on youth.id = pesi.youth_focus_level_id
 LEFT JOIN rep_ind_gender_youth_focus_levels capdev on capdev.id = pesi.capdev_focus_level_id
 LEFT JOIN rep_ind_gender_youth_focus_levels climate on climate.id = pesi.climate_change_level_id
-left join project_expected_study_links pesl on pesl.expected_id =pesi.project_expected_study_id and pesl.id_phase =pesi.id_phase and link !='' 
+-- left join project_expected_study_links pesl on pesl.expected_id =pesi.project_expected_study_id and pesl.id_phase =pesi.id_phase and link !='' 
 -- 
 LEFT JOIN project_expected_study_policies pesp on pesp.expected_id =pesi.project_expected_study_id and pesp.id_phase =pesi.id_phase
 LEFT JOIN project_policies pol on pol.id =pesp.project_policy_id and pol.is_active
