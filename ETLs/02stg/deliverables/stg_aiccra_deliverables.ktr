@@ -685,6 +685,8 @@
         ,dai.last_updated last_updated_altmetric
         ,dai.last_sync last_sync_almetric
 		,d.id_phase id_phase_dlv
+		,d.project_id cluster_owner_id
+		,pown.acronym cluster_owner_acronym
 		,sysdate() updated_date
         -- #,'##############################',di.*
         -- select *
@@ -699,7 +701,7 @@
         -- LEFT JOIN deliverable_cross_cutting_markers dccm on dccm.deliverable_id = di.deliverable_id and dccm.id_phase = di.id_phase and dccm.cgiar_cross_cutting_marker_id = ccm.id
         -- LEFT JOIN rep_ind_gender_youth_focus_levels ccml on ccml.id = dccm.rep_ind_gender_youth_focus_level_id
         -- # 20201006 CC cluster onwer + shared
- left join (select ddi.id_phase, dd.project_id,ddi.deliverable_id, "(Owner)" cluster_owner
+ left join (select ddi.id_phase, dd.project_id,ddi.deliverable_id, "(Owner)" cluster_owner_type
  	from deliverables dd
  	join deliverables_info ddi on ddi.deliverable_id = dd.id 
  	-- where ddi.id_phase = 406
@@ -707,7 +709,7 @@
  	JOIN phases ph1 on ph1.id = ddi.id_phase and ph1.id = bpa1.parameter_value
  	where dd.is_active and ddi.is_active
  	union
- 	select pds.id_phase, pds.project_id, pds.deliverable_id, "(Shared)" cluster_owner
+ 	select pds.id_phase, pds.project_id, pds.deliverable_id, "(Shared)" cluster_owner_type
  	from project_deliverable_shared pds -- on di.id_phase = pds.id_phase and di.deliverable_id = pds.deliverable_id
  	join bi_parameters bpa2 on bpa2.parameter_name='BI_data_phase'
  	JOIN phases ph2 on ph2.id = pds.id_phase and ph2.id = bpa2.parameter_value
@@ -716,6 +718,7 @@
  	) pds1 on pds1.id_phase = di.id_phase and pds1.deliverable_id = di.deliverable_id  
 		 LEFT JOIN projects p ON p.id = pds1.project_id AND p.is_active
 		 LEFT JOIN projects_info pi ON pi.project_id = p.id   and pi.id_phase = ph.id 
+		 LEFT JOIN projects pown on pown.id = d.project_id
         -- left JOIN project_deliverable_shared pds on pds.deliverable_id = di.deliverable_id and pds.id_phase = di.id_phase
         -- LEFT JOIN projects_info pi ON (d.project_id=pi.project_id and di.id_phase=pi.id_phase) or (pds.project_id = pi.project_id and pi.id_phase = pds.id_phase)
         -- LEFT JOIN projects p ON pi.project_id = p.id AND p.is_active
@@ -1971,6 +1974,52 @@
         <origin>Load deliverables</origin>
         <comments>id_phase_dlv</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>cluster_owner_id</name>
+        <length>15</length>
+        <precision>0</precision>
+        <origin>Load deliverables</origin>
+        <comments>cluster_owner_id</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>cluster_owner_acronym</name>
+        <length>21845</length>
+        <precision>-1</precision>
+        <origin>Load deliverables</origin>
+        <comments>cluster_owner_acronym</comments>
+        <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
         <currency_symbol/>

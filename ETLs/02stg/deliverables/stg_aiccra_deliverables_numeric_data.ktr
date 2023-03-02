@@ -666,6 +666,7 @@ left join (select distinct dicd.deliverable_id, dicd.id_phase, pout.acronym, "Ye
 		  join deliverable_crp_outcomes dco on dco.deliverable_id = dicd.deliverable_id and dco.id_phase = dicd.id_phase 
       JOIN crp_program_outcomes pout on pout.id = dco.crp_outcome_id 
       where dicd.is_active 
+	  -- and dicd.status != 5 -- dif cancelled
       and pout.acronym = 'IPI 2.3' 
       and pout.is_active ) dipi on dipi.deliverable_id = di.deliverable_id and dipi.id_phase = di.id_phase 
 where d.is_active

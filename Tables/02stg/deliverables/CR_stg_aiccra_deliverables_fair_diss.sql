@@ -10,7 +10,8 @@ CREATE TABLE `stg_aiccra_deliverables_fair_diss` (
     `is_Interoperable`	varchar(4) default null,
     `is_Reusable`	varchar(4) default null,
     `doi` varchar(500) DEFAULT null,
+    `shared_clusters_acronym` text DEFAULT null,
     `updated_date`	datetime 
- ) ENGINE=InnoDB DEFAULT CHARSET=utf8
+ ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4
  ;
  

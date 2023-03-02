@@ -53,5 +53,7 @@ CREATE TABLE `stg_aiccra_deliverables` (
    `last_updated_altmetric` timestamp DEFAULT NULL,  
    `last_sync_almetric` timestamp DEFAULT NULL,
    `id_phase_dlv` bigint(20),
+   `cluster_owner_id` bigint(20),
+   `cluster_owner_acronym` text,
    `updated_date` timestamp DEFAULT NULL
  ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4

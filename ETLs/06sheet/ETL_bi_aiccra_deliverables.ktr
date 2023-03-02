@@ -541,23 +541,64 @@
       <schema_name/>
     </partitioning>
     <connection>DES_DB</connection>
-    <sql>SELECT cluster_owner, 
-PRY_ID, 
-PRY_composeID, 
-PRY_title,
-PRY_acronym, 
-DLV_ID, 
-DLV_composeID, 
-DLV_Title, DLV_Description, DLV_year, DLV_Category, DLV_subCategory, DLV_Status, DLV_geographicScope, DLV_location, 
-DLV_partnerName, DLV_partnerPerson, PPA_partner_name, `Role`, FS_ID, FS_composeID, FS_title, FS_type, Management_liason, 
-reg_name, prg_name, CoA_id, CoA_DESC, indicator_pk, contribution_pk, indicator_id, indicator_code, `Indicator`, loc_region, 
-gender_level, youth_level, isi_publication, DLV_isOpenAcces, DLV_planned, activity_id, activity_title, activity_leader, Link, 
-altmetric_score, almetric_details, image_small, already_disseminated, dissemination_channel, dissemination_URL, last_updated_altmetric, 
-id_phase_dlv,
-last_sync_almetric,updated_date
+    <sql>SELECT
+  cluster_owner
+, PRY_ID
+, PRY_composeID
+, PRY_title
+, PRY_acronym
+, DLV_ID
+, DLV_composeID
+, DLV_Title
+, DLV_Description
+, DLV_year
+, DLV_Category
+, DLV_subCategory
+, DLV_Status
+, DLV_geographicScope
+, DLV_location
+, DLV_partnerName
+, DLV_partnerPerson
+, PPA_partner_name
+, Role
+, FS_ID
+, FS_composeID
+, FS_title
+, FS_type
+, Management_liason
+, reg_name
+, prg_name
+, CoA_id
+, CoA_DESC
+, indicator_pk
+, contribution_pk
+, indicator_id
+, indicator_code
+, Indicator
+, loc_region
+, gender_level
+, youth_level
+, isi_publication
+, DLV_isOpenAcces
+, DLV_planned
+, activity_id
+, activity_title
+, activity_leader
+, Link
+, altmetric_score
+, almetric_details
+, image_small
+, already_disseminated
+, dissemination_channel
+, dissemination_URL
+, last_updated_altmetric
+, last_sync_almetric
+, id_phase_dlv
+, cluster_owner_id
+, cluster_owner_acronym
+, updated_date
 FROM stg_aiccra_deliverables
 order by DLV_ID, DLV_year
-;
 </sql>
     <limit>0</limit>
     <lookup/>
@@ -1740,6 +1781,75 @@ order by DLV_ID, DLV_year
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>id_phase_dlv</name>
+        <length>15</length>
+        <precision>0</precision>
+        <origin>Load stg aiccra deliverables</origin>
+        <comments>id_phase_dlv</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>cluster_owner_id</name>
+        <length>15</length>
+        <precision>0</precision>
+        <origin>Load stg aiccra deliverables</origin>
+        <comments>cluster_owner_id</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>cluster_owner_acronym</name>
+        <length>16383</length>
+        <precision>-1</precision>
+        <origin>Load stg aiccra deliverables</origin>
+        <comments>cluster_owner_acronym</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
         <type>Timestamp</type>
         <storagetype>normal</storagetype>
         <name>updated_date</name>
@@ -1799,6 +1909,7 @@ order by DLV_ID, DLV_year
 , is_Interoperable
 , is_Reusable
 , doi
+, shared_clusters_acronym
 FROM stg_aiccra_deliverables_fair_diss
 order by DLV_ID, DLV_year
 ;
@@ -2002,6 +2113,29 @@ order by DLV_ID, DLV_year
         <precision>-1</precision>
         <origin>Load stg aiccra deliverables fair diss</origin>
         <comments>doi</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>shared_clusters_acronym</name>
+        <length>16383</length>
+        <precision>-1</precision>
+        <origin>Load stg aiccra deliverables fair diss</origin>
+        <comments>shared_clusters_acronym</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -2314,6 +2448,18 @@ order by DLV_ID, DLV_year
       </field>
       <field>
         <name>last_sync_almetric</name>
+        <rename/>
+      </field>
+      <field>
+        <name>cluster_owner_id</name>
+        <rename/>
+      </field>
+      <field>
+        <name>cluster_owner_acronym</name>
+        <rename/>
+      </field>
+      <field>
+        <name>shared_clusters_acronym</name>
         <rename/>
       </field>
       <select_unspecified>N</select_unspecified>

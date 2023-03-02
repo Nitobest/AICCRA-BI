@@ -59,5 +59,8 @@ CREATE TABLE `aiccra_deliverables` (
    `is_Interoperable`	varchar(4) default null,
    `is_Reusable`	varchar(4) default null,
    `id_phase_dlv` bigint(20),
+   `cluster_owner_id` bigint(20),
+   `cluster_owner_acronym` text,
+   `shared_clusters_acronym` text,
    `updated_date` timestamp DEFAULT NULL
  ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4
