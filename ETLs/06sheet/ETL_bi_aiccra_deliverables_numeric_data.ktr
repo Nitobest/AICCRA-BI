@@ -575,6 +575,10 @@
 , cited_by_wikipedia_pages
 , info_type
 , is_IPI23_related
+, almetric_details
+, image_small       
+, last_updated_altmetric
+, last_sync_almetric
 , updated_date
 FROM stg_aiccra_deliverables_numeric_data
 </sql>
@@ -1391,6 +1395,98 @@ FROM stg_aiccra_deliverables_numeric_data
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>almetric_details</name>
+        <length>16383</length>
+        <precision>-1</precision>
+        <origin>Load stg deliverables_numeric_data</origin>
+        <comments>almetric_details</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>image_small</name>
+        <length>16383</length>
+        <precision>-1</precision>
+        <origin>Load stg deliverables_numeric_data</origin>
+        <comments>image_small</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Timestamp</type>
+        <storagetype>normal</storagetype>
+        <name>last_updated_altmetric</name>
+        <length>0</length>
+        <precision>-1</precision>
+        <origin>Load stg deliverables_numeric_data</origin>
+        <comments>last_updated_altmetric</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Timestamp</type>
+        <storagetype>normal</storagetype>
+        <name>last_sync_almetric</name>
+        <length>0</length>
+        <precision>-1</precision>
+        <origin>Load stg deliverables_numeric_data</origin>
+        <comments>last_sync_almetric</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
         <type>Timestamp</type>
         <storagetype>normal</storagetype>
         <name>updated_date</name>
@@ -1582,6 +1678,22 @@ FROM stg_aiccra_deliverables_numeric_data
       </field>
       <field>
         <name>info_type</name>
+        <rename/>
+      </field>
+      <field>
+        <name>almetric_details</name>
+        <rename/>
+      </field>
+      <field>
+        <name>image_small</name>
+        <rename/>
+      </field>
+      <field>
+        <name>last_sync_almetric</name>
+        <rename/>
+      </field>
+      <field>
+        <name>last_updated_altmetric</name>
         <rename/>
       </field>
       <select_unspecified>N</select_unspecified>

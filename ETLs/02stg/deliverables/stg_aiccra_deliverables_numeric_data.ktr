@@ -651,7 +651,11 @@ End is_formal
 -- ,dp.is_active 
 	, if (not(isnull(dipi.ipi23)) and dai.score is not null, "Ambos", if(dai.score is not null, "Altmetric", if(not(isnull(dipi.ipi23)), "Capdev", "Ninguno")) ) info_type
 	, if(isnull(dipi.ipi23), "No", "Yes") is_IPI23_related
-	,sysdate() updated_date
+	,concat('https://www.altmetric.com/details/',dai.altmetric_id) almetric_details
+    ,ifnull(dai.image_small,'https://drive.google.com/uc?export=view&amp;id=1csawoXLhBp0hDcA3NdnMVIwXUqhZvkuP') image_small       
+    ,dai.last_updated last_updated_altmetric
+    ,dai.last_sync last_sync_almetric
+    ,sysdate() updated_date
 from deliverables d
 join deliverables_info di on di.deliverable_id = d.id and di.is_active 
 join bi_parameters bpa2 on bpa2.parameter_name='BI_data_phase'
@@ -1495,6 +1499,98 @@ where d.is_active
         <precision>-1</precision>
         <origin>Load deliverables_numeric_data</origin>
         <comments>is_IPI23_related</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>almetric_details</name>
+        <length>65569</length>
+        <precision>-1</precision>
+        <origin>Load deliverables_numeric_data</origin>
+        <comments>almetric_details</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>image_small</name>
+        <length>65535</length>
+        <precision>-1</precision>
+        <origin>Load deliverables_numeric_data</origin>
+        <comments>image_small</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Timestamp</type>
+        <storagetype>normal</storagetype>
+        <name>last_updated_altmetric</name>
+        <length>0</length>
+        <precision>-1</precision>
+        <origin>Load deliverables_numeric_data</origin>
+        <comments>last_updated_altmetric</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Timestamp</type>
+        <storagetype>normal</storagetype>
+        <name>last_sync_almetric</name>
+        <length>0</length>
+        <precision>-1</precision>
+        <origin>Load deliverables_numeric_data</origin>
+        <comments>last_sync_almetric</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
