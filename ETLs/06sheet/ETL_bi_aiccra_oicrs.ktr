@@ -780,18 +780,22 @@ LEFT JOIN project_innovation_info inno on inno.project_innovation_id =pesin.proj
 -- 	where pespo.id_phase = cast(bpa1.parameter_value as double) -- bpa1.parameter_value  
 -- 	) pespo1 on pespo1.id_phase = pesi.id_phase and pespo1.expected_id = pesi.project_expected_study_id
 -- target units
-LEFT JOIN (select pesi2.project_expected_study_id , pesi2.id_phase,  tu.name target_unit, 
- po.project_id , po.outcome_id, -- pespo.id, pespo.expected_id, 
- pespo.project_outcome_id,  -- pespo.id_phase, 
- cpo.acronym indicator_acronym, cpo.description indicator_description, cpo.composed_id, cm.title milestone, pm.year milestone_year,
- pm.setted_value , pm.achieved_value  	
+LEFT JOIN (select pesi2.project_expected_study_id , pesi2.id_phase,  
+ cpo.id outcome_id, cpo.acronym indicator_acronym, cpo.description indicator_description, cpo.composed_id 
+ -- ,
+ -- tu.name target_unit, 
+-- po.project_id , pespo.id, pespo.expected_id, 
+-- pespo.project_outcome_id,  -- pespo.id_phase, 
+-- cm.title milestone, pm.year milestone_year,
+--  pm.setted_value , pm.achieved_value  	
 	from project_expected_study_info pesi2
- 	left join project_expected_study_project_outcomes pespo on pespo.expected_id = pesi2.project_expected_study_id and pespo.id_phase = pesi2.id_phase 
- 	left join project_outcomes po on po.id = pespo.project_outcome_id and po.is_active -- and po.id_phase = pespo.id_phase
- 	left join crp_program_outcomes cpo on cpo.id = po.outcome_id and cpo.is_active 
- 	left join crp_milestones cm on cm.crp_program_outcome_id = cpo.id and cm.`year` = pesi2.`year` and cm.is_active
- 	left join srf_target_units tu on cm.target_unit_id = tu.id 
- 	left join project_milestones pm on pm.project_outcome_id = po.id and pm.crp_milestone_id = cm.id and pm.is_active and pm.year &lt;&gt; -1
+-- 	left join project_expected_study_project_outcomes pespo on pespo.expected_id = pesi2.project_expected_study_id and pespo.id_phase = pesi2.id_phase 
+-- 	left join project_outcomes po on po.id = pespo.project_outcome_id and po.is_active -- and po.id_phase = pespo.id_phase
+ 	left join project_expected_study_crp_outcomes pesco on pesco.expected_id = pesi2.project_expected_study_id and pesco.id_phase = pesi2.id_phase
+ 	left join crp_program_outcomes cpo on cpo.id = pesco.crp_outcome_id and cpo.is_active 
+-- 	left join crp_milestones cm on cm.crp_program_outcome_id = cpo.id and cm.`year` = pesi2.`year` and cm.is_active
+-- 	left join srf_target_units tu on cm.target_unit_id = tu.id 
+-- 	left join project_milestones pm on pm.project_outcome_id = po.id and pm.crp_milestone_id = cm.id and pm.is_active and pm.year &lt;&gt; -1
 	) pespo1 on pespo1.id_phase = pesi.id_phase and pespo1.project_expected_study_id = pesi.project_expected_study_id		
 -- Centers
 left join (select pescen.expected_id, pescen.id_phase, -- ice.name center_name,
@@ -827,7 +831,6 @@ and not (ifnull(pesi.title,'') = '' and mat.`name` is null)
 -- GROUP BY pesi.project_expected_study_id, pesi.id_phase
 -- order by 1,5 desc,pes.id
 ;
-
 
 </sql>
     <limit>0</limit>
@@ -1922,7 +1925,7 @@ and not (ifnull(pesi.title,'') = '' and mat.`name` is null)
         <type>String</type>
         <storagetype>normal</storagetype>
         <name>shared_clusters</name>
-        <length>10000</length>
+        <length>30000</length>
         <precision>-1</precision>
         <origin>Load oicrs</origin>
         <comments>shared_clusters</comments>
