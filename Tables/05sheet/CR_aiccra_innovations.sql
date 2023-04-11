@@ -33,5 +33,6 @@ CREATE TABLE aiccra_innovations
 , updated_date datetime
 , status text
 , cluster_title text
+, shared_clusters_acronym text
 )
 ;

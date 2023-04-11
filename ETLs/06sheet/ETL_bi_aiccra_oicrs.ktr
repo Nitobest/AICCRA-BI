@@ -806,7 +806,7 @@ ifnull(concat(if (ice.acronym is not null, concat(ice.acronym,'-'), ''), ice.nam
 		   where pescen.id_phase = cast(bp11.parameter_value as double)  
 		   ) pescen2 on pescen2.expected_id = pesi.project_expected_study_id and pescen2.id_phase = pesi.id_phase
 -- group shared clusters		   
-left join (select pespr.id_phase , pes2.id pes_id, group_concat(pi4.acronym SEPARATOR ', ') shared_clusters
+left join (select pespr.id_phase , pes2.id pes_id, group_concat(pi4.acronym SEPARATOR ',') shared_clusters
 from project_expected_studies pes2  
 inner JOIN expected_study_projects pespr on pespr.expected_id = pes2.id and pespr.is_active   
 inner join projects pps on pespr.project_id = pps.id and pps.is_active 
