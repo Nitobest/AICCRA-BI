@@ -540,7 +540,7 @@ ad.cluster_owner_id , ad.cluster_owner cluster_owner_type, ad.cluster_owner_acro
  ad.DLV_year out_year , ad.indicator_pk , ad.contribution_pk , ad.indicator_code , ad.`Indicator` indicator_description,
 ad.DLV_partnerName partner_name , ad.PPA_partner_name ppa_partner_name , ad.loc_region , ad.DLV_geographicScope geographic_scope , 
 ad.DLV_location location,ad.gender_level , ad.youth_level ,
-ad.DLV_Status status, ad.shared_clusters_acronym, SYSDATE() last_updated_date
+ad.DLV_Status status, ad.shared_clusters_acronym, NOW() last_updated_date
 from aiccra_deliverables ad 
 union all
 select distinct if(instr(ao.study_type,'OICR') >0, 'OICR','MELIA') study_type , ao.oicr_id , ao.study_type , ao.cluster_id , 
@@ -548,7 +548,7 @@ ao.cluster_title , ao.cluster_acronym,
 ao.owner_cluster_id , ao.cluster_owner_type , ao.owner_cluster_acronym ,
 ao.oicr_year , ao.indicator_pk , ao.contribution_pk , ao.indicator_acronym , ao.indicator_description ,
 ao.partner_name , ao.center_name , ao.region , ao.geographic_scope , ao.country , ao.gender , ao.youth , 
-ao.status, ao.shared_clusters, SYSDATE() last_updated_date
+ao.status, ao.shared_clusters, NOW() last_updated_date
 from aiccra_oicrs ao 
 union all
 select DISTINCT 'innovation', ai.innovation_id ,  'Innovation' out_type_desc, ai.cluster_id , 
@@ -556,7 +556,7 @@ ai.cluster_title, ai.cluster_acronym ,
 ai.cluster_owner_id , ai.cluster_owner_type , ai.cluster_owner_acronym ,
 ai.innovation_year , ai.indicator_pk , ai.contribution_pk , ai.indicator_acronym , ai.indicator_name ,
 ai.contributor_name , ai.center_name , ai.region , ai.geographic_scope , ai.country , ai.gender_relevance , ai.youth_relevance ,
-ai.status status, 'PDTE' shared_clusters_acronym, SYSDATE() last_updated_date
+ai.status status, shared_clusters_acronym, NOW() last_updated_date
 from aiccra_innovations ai 
 ;
 
@@ -574,7 +574,7 @@ from aiccra_innovations ai
         <name>out_type</name>
         <length>11</length>
         <precision>-1</precision>
-        <origin>Load innovations</origin>
+        <origin>Load cluster results</origin>
         <comments>out_type</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -597,7 +597,7 @@ from aiccra_innovations ai
         <name>out_id</name>
         <length>15</length>
         <precision>0</precision>
-        <origin>Load innovations</origin>
+        <origin>Load cluster results</origin>
         <comments>out_id</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
@@ -620,7 +620,7 @@ from aiccra_innovations ai
         <name>out_type_name</name>
         <length>65535</length>
         <precision>-1</precision>
-        <origin>Load innovations</origin>
+        <origin>Load cluster results</origin>
         <comments>out_type_name</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -643,7 +643,7 @@ from aiccra_innovations ai
         <name>cluster_id</name>
         <length>20</length>
         <precision>-1</precision>
-        <origin>Load innovations</origin>
+        <origin>Load cluster results</origin>
         <comments>cluster_id</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -666,7 +666,7 @@ from aiccra_innovations ai
         <name>cluster_title</name>
         <length>536870911</length>
         <precision>-1</precision>
-        <origin>Load innovations</origin>
+        <origin>Load cluster results</origin>
         <comments>cluster_title</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -689,7 +689,7 @@ from aiccra_innovations ai
         <name>cluster_acronym</name>
         <length>65535</length>
         <precision>-1</precision>
-        <origin>Load innovations</origin>
+        <origin>Load cluster results</origin>
         <comments>cluster_acronym</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -712,7 +712,7 @@ from aiccra_innovations ai
         <name>cluster_owner_id</name>
         <length>15</length>
         <precision>0</precision>
-        <origin>Load innovations</origin>
+        <origin>Load cluster results</origin>
         <comments>cluster_owner_id</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
@@ -735,7 +735,7 @@ from aiccra_innovations ai
         <name>cluster_owner_type</name>
         <length>65535</length>
         <precision>-1</precision>
-        <origin>Load innovations</origin>
+        <origin>Load cluster results</origin>
         <comments>cluster_owner_type</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -758,7 +758,7 @@ from aiccra_innovations ai
         <name>cluster_owner_acronym</name>
         <length>65535</length>
         <precision>-1</precision>
-        <origin>Load innovations</origin>
+        <origin>Load cluster results</origin>
         <comments>cluster_owner_acronym</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -781,7 +781,7 @@ from aiccra_innovations ai
         <name>out_year</name>
         <length>9</length>
         <precision>0</precision>
-        <origin>Load innovations</origin>
+        <origin>Load cluster results</origin>
         <comments>out_year</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
@@ -804,7 +804,7 @@ from aiccra_innovations ai
         <name>indicator_pk</name>
         <length>50</length>
         <precision>-1</precision>
-        <origin>Load innovations</origin>
+        <origin>Load cluster results</origin>
         <comments>indicator_pk</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -827,7 +827,7 @@ from aiccra_innovations ai
         <name>contribution_pk</name>
         <length>255</length>
         <precision>-1</precision>
-        <origin>Load innovations</origin>
+        <origin>Load cluster results</origin>
         <comments>contribution_pk</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -850,7 +850,7 @@ from aiccra_innovations ai
         <name>indicator_code</name>
         <length>65535</length>
         <precision>-1</precision>
-        <origin>Load innovations</origin>
+        <origin>Load cluster results</origin>
         <comments>indicator_code</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -873,7 +873,7 @@ from aiccra_innovations ai
         <name>indicator_description</name>
         <length>536870911</length>
         <precision>-1</precision>
-        <origin>Load innovations</origin>
+        <origin>Load cluster results</origin>
         <comments>indicator_description</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -896,7 +896,7 @@ from aiccra_innovations ai
         <name>partner_name</name>
         <length>536870911</length>
         <precision>-1</precision>
-        <origin>Load innovations</origin>
+        <origin>Load cluster results</origin>
         <comments>partner_name</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -919,7 +919,7 @@ from aiccra_innovations ai
         <name>ppa_partner_name</name>
         <length>536870911</length>
         <precision>-1</precision>
-        <origin>Load innovations</origin>
+        <origin>Load cluster results</origin>
         <comments>ppa_partner_name</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -942,7 +942,7 @@ from aiccra_innovations ai
         <name>loc_region</name>
         <length>65535</length>
         <precision>-1</precision>
-        <origin>Load innovations</origin>
+        <origin>Load cluster results</origin>
         <comments>loc_region</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -965,7 +965,7 @@ from aiccra_innovations ai
         <name>geographic_scope</name>
         <length>536870911</length>
         <precision>-1</precision>
-        <origin>Load innovations</origin>
+        <origin>Load cluster results</origin>
         <comments>geographic_scope</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -988,7 +988,7 @@ from aiccra_innovations ai
         <name>location</name>
         <length>536870911</length>
         <precision>-1</precision>
-        <origin>Load innovations</origin>
+        <origin>Load cluster results</origin>
         <comments>location</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -1011,7 +1011,7 @@ from aiccra_innovations ai
         <name>gender_level</name>
         <length>65535</length>
         <precision>-1</precision>
-        <origin>Load innovations</origin>
+        <origin>Load cluster results</origin>
         <comments>gender_level</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -1034,7 +1034,7 @@ from aiccra_innovations ai
         <name>youth_level</name>
         <length>65535</length>
         <precision>-1</precision>
-        <origin>Load innovations</origin>
+        <origin>Load cluster results</origin>
         <comments>youth_level</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -1057,7 +1057,7 @@ from aiccra_innovations ai
         <name>status</name>
         <length>65535</length>
         <precision>-1</precision>
-        <origin>Load innovations</origin>
+        <origin>Load cluster results</origin>
         <comments>status</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -1080,7 +1080,7 @@ from aiccra_innovations ai
         <name>shared_clusters_acronym</name>
         <length>65535</length>
         <precision>-1</precision>
-        <origin>Load innovations</origin>
+        <origin>Load cluster results</origin>
         <comments>shared_clusters_acronym</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
@@ -1103,7 +1103,7 @@ from aiccra_innovations ai
         <name>last_updated_date</name>
         <length>0</length>
         <precision>-1</precision>
-        <origin>Load innovations</origin>
+        <origin>Load cluster results</origin>
         <comments>last_updated_date</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
