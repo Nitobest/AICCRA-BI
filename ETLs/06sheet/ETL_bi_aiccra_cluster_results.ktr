@@ -534,29 +534,30 @@
       <schema_name/>
     </partitioning>
     <connection>DES_DB</connection>
-    <sql>select distinct 'deliverable' out_type, ad.DLV_ID out_id,'Deliverable' out_type_name, ad.PRY_ID cluster_id, 
+    <sql>select distinct 'Deliverable' out_type, ad.DLV_ID out_id,concat('D',ad.DLV_ID) composite_out_id, 'Deliverable' out_type_name, ad.PRY_ID cluster_id, 
 ad.PRY_title cluster_title, ad.PRY_acronym cluster_acronym, 
 ad.cluster_owner_id , ad.cluster_owner cluster_owner_type, ad.cluster_owner_acronym , 
  ad.DLV_year out_year , ad.indicator_pk , ad.contribution_pk , ad.indicator_code , ad.`Indicator` indicator_description,
 ad.DLV_partnerName partner_name , ad.PPA_partner_name ppa_partner_name , ad.loc_region , ad.DLV_geographicScope geographic_scope , 
 ad.DLV_location location,ad.gender_level , ad.youth_level ,
-ad.DLV_Status status, ad.shared_clusters_acronym, NOW() last_updated_date
+ad.DLV_Status status, ad.shared_clusters_acronym, now() last_updated_date
 from aiccra_deliverables ad 
-union all
-select distinct if(instr(ao.study_type,'OICR') >0, 'OICR','MELIA') study_type , ao.oicr_id , ao.study_type , ao.cluster_id , 
+union  all
+select distinct if(instr(ao.study_type,'OICR') >0, 'OICR','MELIA') study_type , ao.oicr_id , concat(if(instr(ao.study_type,'OICR') >0, 'O','M'),ao.oicr_id) composite_out_id, 
+ao.study_type , ao.cluster_id , 
 ao.cluster_title , ao.cluster_acronym,
 ao.owner_cluster_id , ao.cluster_owner_type , ao.owner_cluster_acronym ,
 ao.oicr_year , ao.indicator_pk , ao.contribution_pk , ao.indicator_acronym , ao.indicator_description ,
 ao.partner_name , ao.center_name , ao.region , ao.geographic_scope , ao.country , ao.gender , ao.youth , 
-ao.status, ao.shared_clusters, NOW() last_updated_date
+ao.status, ao.shared_clusters, NOW()  last_updated_date
 from aiccra_oicrs ao 
 union all
-select DISTINCT 'innovation', ai.innovation_id ,  'Innovation' out_type_desc, ai.cluster_id , 
+select DISTINCT 'Innovation', ai.innovation_id ,concat('I',ai.innovation_id) composite_out_id, 'Innovation' out_type_desc, ai.cluster_id , 
 ai.cluster_title, ai.cluster_acronym ,
 ai.cluster_owner_id , ai.cluster_owner_type , ai.cluster_owner_acronym ,
 ai.innovation_year , ai.indicator_pk , ai.contribution_pk , ai.indicator_acronym , ai.indicator_name ,
 ai.contributor_name , ai.center_name , ai.region , ai.geographic_scope , ai.country , ai.gender_relevance , ai.youth_relevance ,
-ai.status status, shared_clusters_acronym, NOW() last_updated_date
+ai.status status, shared_clusters_acronym , NOW()  last_updated_date
 from aiccra_innovations ai 
 ;
 
@@ -600,6 +601,29 @@ from aiccra_innovations ai
         <origin>Load cluster results</origin>
         <comments>out_id</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>composite_out_id</name>
+        <length>21</length>
+        <precision>-1</precision>
+        <origin>Load cluster results</origin>
+        <comments>composite_out_id</comments>
+        <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
         <currency_symbol/>

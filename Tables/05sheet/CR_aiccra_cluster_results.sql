@@ -4,6 +4,7 @@ CREATE TABLE aiccra_cluster_results
 (
 	out_type	varchar(30)
 ,	out_id	bigint
+,	composite_out_id varchar(30)
 ,	out_type_name	text
 ,	cluster_id	bigint
 ,	cluster_title	text
@@ -26,5 +27,5 @@ CREATE TABLE aiccra_cluster_results
 ,	status	text
 ,	shared_clusters_acronym	text
 ,	last_updated_date datetime
-)
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4
 ;
