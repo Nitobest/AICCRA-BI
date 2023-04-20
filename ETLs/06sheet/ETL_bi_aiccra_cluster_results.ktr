@@ -518,6 +518,26 @@
   <order>
     <hop>
       <from>Load cluster results</from>
+      <to>Sort rows</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Load cluster general info</from>
+      <to>Merge join</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Sort rows</from>
+      <to>Merge join</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Merge join</from>
+      <to>Select values</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Select values</from>
       <to>aiccra_cluster_results</to>
       <enabled>Y</enabled>
     </hop>
@@ -542,6 +562,7 @@ ad.DLV_partnerName partner_name , ad.PPA_partner_name ppa_partner_name , ad.loc_
 ad.DLV_location location,ad.gender_level , ad.youth_level ,
 ad.DLV_Status status, ad.shared_clusters_acronym, now() last_updated_date
 from aiccra_deliverables ad 
+-- order by ad.PRY_ID, ad.DLV_ID
 union  all
 select distinct if(instr(ao.study_type,'OICR') >0, 'OICR','MELIA') study_type , ao.oicr_id , concat(if(instr(ao.study_type,'OICR') >0, 'O','M'),ao.oicr_id) composite_out_id, 
 ao.study_type , ao.cluster_id , 
@@ -551,6 +572,7 @@ ao.oicr_year , ao.indicator_pk , ao.contribution_pk , ao.indicator_acronym , ao.
 ao.partner_name , ao.center_name , ao.region , ao.geographic_scope , ao.country , ao.gender , ao.youth , 
 ao.status, ao.shared_clusters, NOW()  last_updated_date
 from aiccra_oicrs ao 
+-- order by ao.cluster_id, ao.oicr_id
 union all
 select DISTINCT 'Innovation', ai.innovation_id ,concat('I',ai.innovation_id) composite_out_id, 'Innovation' out_type_desc, ai.cluster_id , 
 ai.cluster_title, ai.cluster_acronym ,
@@ -559,6 +581,7 @@ ai.innovation_year , ai.indicator_pk , ai.contribution_pk , ai.indicator_acronym
 ai.contributor_name , ai.center_name , ai.region , ai.geographic_scope , ai.country , ai.gender_relevance , ai.youth_relevance ,
 ai.status status, shared_clusters_acronym , NOW()  last_updated_date
 from aiccra_innovations ai 
+-- order by ai.cluster_id, ai.innovation_id
 ;
 
 </sql>
@@ -1198,8 +1221,492 @@ from aiccra_innovations ai
       </output>
     </remotesteps>
     <GUI>
-      <xloc>448</xloc>
+      <xloc>976</xloc>
+      <yloc>112</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Load cluster general info</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>DES_DB</connection>
+    <sql>SELECT
+  cluster_id
+, cluster_compose_id
+, cluster_title
+, cluster_acronym
+, cluster_summary
+, cluster_type
+, liaison_institution_name1
+, liaison_institution_name2
+, cluster_link
+FROM stg_aiccra_clusters_general_info
+order by cluster_id
+;
+
+</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cached_row_meta_active>N</cached_row_meta_active>
+    <row-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>cluster_id</name>
+        <length>15</length>
+        <precision>0</precision>
+        <origin>Load cluster general info</origin>
+        <comments>cluster_id</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>cluster_compose_id</name>
+        <length>21</length>
+        <precision>-1</precision>
+        <origin>Load cluster general info</origin>
+        <comments>cluster_compose_id</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>cluster_title</name>
+        <length>16383</length>
+        <precision>-1</precision>
+        <origin>Load cluster general info</origin>
+        <comments>cluster_title</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>cluster_acronym</name>
+        <length>16383</length>
+        <precision>-1</precision>
+        <origin>Load cluster general info</origin>
+        <comments>cluster_acronym</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>cluster_summary</name>
+        <length>16383</length>
+        <precision>-1</precision>
+        <origin>Load cluster general info</origin>
+        <comments>cluster_summary</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>cluster_type</name>
+        <length>16383</length>
+        <precision>-1</precision>
+        <origin>Load cluster general info</origin>
+        <comments>cluster_type</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>liaison_institution_name1</name>
+        <length>16383</length>
+        <precision>-1</precision>
+        <origin>Load cluster general info</origin>
+        <comments>liaison_institution_name1</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>liaison_institution_name2</name>
+        <length>16383</length>
+        <precision>-1</precision>
+        <origin>Load cluster general info</origin>
+        <comments>liaison_institution_name2</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>cluster_link</name>
+        <length>16383</length>
+        <precision>-1</precision>
+        <origin>Load cluster general info</origin>
+        <comments>cluster_link</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+    </row-meta>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>128</xloc>
+      <yloc>64</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Sort rows</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory/>
+    <compress>N</compress>
+    <compress_variable/>
+    <unique_rows>N</unique_rows>
+    <fields>
+      <field>
+        <name>cluster_id</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>320</xloc>
       <yloc>144</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Merge join</name>
+    <type>MergeJoin</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <join_type>INNER</join_type>
+    <step1>Load cluster general info</step1>
+    <step2>Sort rows</step2>
+    <keys_1>
+      <key>cluster_id</key>
+    </keys_1>
+    <keys_2>
+      <key>cluster_id</key>
+    </keys_2>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>528</xloc>
+      <yloc>112</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Select values</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>cluster_compose_id</name>
+        <rename/>
+      </field>
+      <field>
+        <name>cluster_summary</name>
+        <rename/>
+      </field>
+      <field>
+        <name>cluster_type</name>
+        <rename/>
+      </field>
+      <field>
+        <name>liaison_institution_name1</name>
+        <rename/>
+      </field>
+      <field>
+        <name>liaison_institution_name2</name>
+        <rename/>
+      </field>
+      <field>
+        <name>cluster_link</name>
+        <rename/>
+      </field>
+      <field>
+        <name>out_type</name>
+        <rename/>
+      </field>
+      <field>
+        <name>out_id</name>
+        <rename/>
+      </field>
+      <field>
+        <name>composite_out_id</name>
+        <rename/>
+      </field>
+      <field>
+        <name>out_type_name</name>
+        <rename/>
+      </field>
+      <field>
+        <name>cluster_id</name>
+        <rename/>
+      </field>
+      <field>
+        <name>cluster_title</name>
+        <rename/>
+      </field>
+      <field>
+        <name>cluster_acronym</name>
+        <rename/>
+      </field>
+      <field>
+        <name>cluster_owner_id</name>
+        <rename/>
+      </field>
+      <field>
+        <name>cluster_owner_type</name>
+        <rename/>
+      </field>
+      <field>
+        <name>cluster_owner_acronym</name>
+        <rename/>
+      </field>
+      <field>
+        <name>out_year</name>
+        <rename/>
+      </field>
+      <field>
+        <name>indicator_pk</name>
+        <rename/>
+      </field>
+      <field>
+        <name>contribution_pk</name>
+        <rename/>
+      </field>
+      <field>
+        <name>indicator_code</name>
+        <rename/>
+      </field>
+      <field>
+        <name>indicator_description</name>
+        <rename/>
+      </field>
+      <field>
+        <name>partner_name</name>
+        <rename/>
+      </field>
+      <field>
+        <name>ppa_partner_name</name>
+        <rename/>
+      </field>
+      <field>
+        <name>loc_region</name>
+        <rename/>
+      </field>
+      <field>
+        <name>geographic_scope</name>
+        <rename/>
+      </field>
+      <field>
+        <name>location</name>
+        <rename/>
+      </field>
+      <field>
+        <name>gender_level</name>
+        <rename/>
+      </field>
+      <field>
+        <name>youth_level</name>
+        <rename/>
+      </field>
+      <field>
+        <name>status</name>
+        <rename/>
+      </field>
+      <field>
+        <name>shared_clusters_acronym</name>
+        <rename/>
+      </field>
+      <field>
+        <name>last_updated_date</name>
+        <rename/>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>704</xloc>
+      <yloc>112</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
