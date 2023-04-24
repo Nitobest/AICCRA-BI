@@ -603,7 +603,7 @@ pin.id as innovation_id,
 	CONCAT(
 		'https://aiccra.marlo.cgiar.org/clusters/AICCRA/innovation.do?innovationID=',
 		pin.id,
-		'&amp;phaseID=',
+		'&amp;edit=true&amp;phaseID=',
 		miph.max_id_phase -- ,
 		-- '"),"PI',
 		-- pin.id
@@ -874,7 +874,7 @@ ORDER BY
         <type>String</type>
         <storagetype>normal</storagetype>
         <name>link_innovation_id</name>
-        <length>123</length>
+        <length>133</length>
         <precision>-1</precision>
         <origin>Load innovations</origin>
         <comments>link_innovation_id</comments>
