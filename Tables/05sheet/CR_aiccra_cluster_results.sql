@@ -27,5 +27,11 @@ CREATE TABLE aiccra_cluster_results
 ,	status	text
 ,	shared_clusters_acronym	text
 ,	last_updated_date datetime
+,	cluster_compose_id	varchar(21)
+,	cluster_summary	text
+,	cluster_type	text
+,	liaison_institution_name1	text
+,	liaison_institution_name2	text
+,	cluster_link	text
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4
 ;
