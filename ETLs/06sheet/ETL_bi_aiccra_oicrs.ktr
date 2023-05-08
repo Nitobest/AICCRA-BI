@@ -711,7 +711,7 @@ INNER JOIN (select gu1.id gu_id, phg.id max_id_phase, phg.name name_max_id_phase
 from global_units gu1 
 join phases phg on phg.global_unit_id = gu1.id 
 where gu1.is_active
-and phg.id = ifnull(get_max_open_phase(gu1.id),0)
+and phg.id = ifnull(get_max_open_phase(gu1.id),407)
 ) miph on miph.gu_id = gu.id
 -- projects: owner and shared
 inner join (select pesi.id_phase, pes.id, pes.project_id , "Owner" cluster_owner_type, pes.project_id owner_cluster_id
