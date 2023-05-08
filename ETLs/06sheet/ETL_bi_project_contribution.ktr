@@ -584,14 +584,14 @@
 	ph.id "ID Phase", ph.`name` "Phase name", ph.`year` "Phase year",
 	gu.acronym CRP,gu.name "CRP name",
 	concat('C',p.id) "Project ID",
-	CONCAT(
+	ifnull(CONCAT(
 		'https://aiccra.marlo.cgiar.org/projects/',
 		gu.acronym,
 		'/contributionCrp.do?projectOutcomeID=',
 		pout.id,
 		'&amp;edit=true&amp;phaseID=',
 		get_max_open_phase(gu.id)
-	) AS 'Project Link'
+	), 'Not provided') AS 'Project Link'
 	,pi.title "Project Title"
 	,ct.`name` "Project type"
 	, fp.acronym "Flagship" 
@@ -1387,7 +1387,7 @@
         <type>String</type>
         <storagetype>normal</storagetype>
         <name>Progress Narrative</name>
-        <length>10000</length>
+        <length>30000</length>
         <precision>-1</precision>
         <origin>Load_ project_contribution</origin>
         <comments>Progress Narrative</comments>
@@ -1433,7 +1433,7 @@
         <type>String</type>
         <storagetype>normal</storagetype>
         <name>Report Narrative</name>
-        <length>10000</length>
+        <length>30000</length>
         <precision>-1</precision>
         <origin>Load_ project_contribution</origin>
         <comments>Report Narrative</comments>

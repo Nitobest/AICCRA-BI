@@ -52,6 +52,7 @@ CREATE TABLE aiccra_oicrs
 , shared_clusters TEXT
 , owner_cluster_id bigint
 , owner_cluster_acronym text
-, feedback_score int
+, feedback_score DECIMAL(5,2)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4
 ;
+
