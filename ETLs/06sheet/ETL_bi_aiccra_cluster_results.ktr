@@ -517,17 +517,7 @@
   </connection>
   <order>
     <hop>
-      <from>Load cluster results</from>
-      <to>Sort rows</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Load cluster general info</from>
-      <to>Merge join</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Sort rows</from>
       <to>Merge join</to>
       <enabled>Y</enabled>
     </hop>
@@ -539,6 +529,11 @@
     <hop>
       <from>Select values</from>
       <to>aiccra_cluster_results</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Load cluster results</from>
+      <to>Merge join</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -1529,7 +1524,7 @@ order by 5
     </partitioning>
     <join_type>INNER</join_type>
     <step1>Load cluster general info</step1>
-    <step2>Sort rows</step2>
+    <step2>Load cluster results</step2>
     <keys_1>
       <key>cluster_id</key>
     </keys_1>
@@ -1677,48 +1672,6 @@ order by 5
     <GUI>
       <xloc>704</xloc>
       <yloc>112</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Sort rows</name>
-    <type>SortRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>out</prefix>
-    <sort_size>10000</sort_size>
-    <free_memory/>
-    <compress>N</compress>
-    <compress_variable/>
-    <unique_rows>N</unique_rows>
-    <fields>
-      <field>
-        <name>cluster_id</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>320</xloc>
-      <yloc>144</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
