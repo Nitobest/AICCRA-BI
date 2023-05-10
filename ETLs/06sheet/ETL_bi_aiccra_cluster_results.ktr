@@ -810,7 +810,7 @@ order by cluster_id
       <schema_name/>
     </partitioning>
     <connection>DES_DB</connection>
-    <sql>select distinct 'Deliverable' out_type, ad.DLV_ID out_id,concat('D',ad.DLV_ID) composite_out_id, 'Deliverable' out_type_name, ad.PRY_ID cluster_id, 
+    <sql>select distinct 'Deliverable' out_type, ad.DLV_ID out_id, concat('D',ad.DLV_ID) composite_out_id, 'Deliverable' out_type_name, ad.PRY_ID cluster_id, 
 ad.PRY_title cluster_title, ad.PRY_acronym cluster_acronym, 
 ad.cluster_owner_id , ad.cluster_owner cluster_owner_type, ad.cluster_owner_acronym , 
  ad.DLV_year out_year , ad.indicator_pk , ad.contribution_pk , ad.indicator_code , ad.`Indicator` indicator_description,
@@ -847,6 +847,7 @@ ai.link_innovation_id out_marlo_link,
 '' out_pdf_link
 from aiccra_innovations ai 
 -- order by ai.cluster_id, ai.innovation_id
+order by 5
 ;
 </sql>
     <limit>0</limit>
@@ -1563,139 +1564,105 @@ from aiccra_innovations ai
     <fields>
       <field>
         <name>cluster_compose_id</name>
-        <rename/>
       </field>
       <field>
         <name>cluster_summary</name>
-        <rename/>
       </field>
       <field>
         <name>cluster_type</name>
-        <rename/>
       </field>
       <field>
         <name>liaison_institution_name1</name>
-        <rename/>
       </field>
       <field>
         <name>liaison_institution_name2</name>
-        <rename/>
       </field>
       <field>
         <name>cluster_link</name>
-        <rename/>
       </field>
       <field>
         <name>out_type</name>
-        <rename/>
       </field>
       <field>
         <name>out_id</name>
-        <rename/>
       </field>
       <field>
         <name>composite_out_id</name>
-        <rename/>
       </field>
       <field>
         <name>out_type_name</name>
-        <rename/>
       </field>
       <field>
         <name>cluster_id</name>
-        <rename/>
       </field>
       <field>
         <name>cluster_title</name>
-        <rename/>
       </field>
       <field>
         <name>cluster_acronym</name>
-        <rename/>
       </field>
       <field>
         <name>cluster_owner_id</name>
-        <rename/>
       </field>
       <field>
         <name>cluster_owner_type</name>
-        <rename/>
       </field>
       <field>
         <name>cluster_owner_acronym</name>
-        <rename/>
       </field>
       <field>
         <name>out_year</name>
-        <rename/>
       </field>
       <field>
         <name>indicator_pk</name>
-        <rename/>
       </field>
       <field>
         <name>contribution_pk</name>
-        <rename/>
       </field>
       <field>
         <name>indicator_code</name>
-        <rename/>
       </field>
       <field>
         <name>indicator_description</name>
-        <rename/>
       </field>
       <field>
         <name>partner_name</name>
-        <rename/>
       </field>
       <field>
         <name>ppa_partner_name</name>
-        <rename/>
       </field>
       <field>
         <name>loc_region</name>
-        <rename/>
       </field>
       <field>
         <name>geographic_scope</name>
-        <rename/>
       </field>
       <field>
         <name>location</name>
-        <rename/>
       </field>
       <field>
         <name>gender_level</name>
-        <rename/>
       </field>
       <field>
         <name>youth_level</name>
-        <rename/>
       </field>
       <field>
         <name>status</name>
-        <rename/>
       </field>
       <field>
         <name>shared_clusters_acronym</name>
-        <rename/>
       </field>
       <field>
         <name>last_updated_date</name>
-        <rename/>
       </field>
       <field>
         <name>out_title</name>
-        <rename/>
       </field>
       <field>
         <name>out_marlo_link</name>
-        <rename/>
       </field>
       <field>
         <name>out_pdf_link</name>
-        <rename/>
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
@@ -1726,7 +1693,7 @@ from aiccra_innovations ai
     </partitioning>
     <directory>%%java.io.tmpdir%%</directory>
     <prefix>out</prefix>
-    <sort_size>1000000</sort_size>
+    <sort_size>10000</sort_size>
     <free_memory/>
     <compress>N</compress>
     <compress_variable/>
