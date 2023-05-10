@@ -33,5 +33,8 @@ CREATE TABLE aiccra_cluster_results
 ,	liaison_institution_name1	text
 ,	liaison_institution_name2	text
 ,	cluster_link	text
+, 	out_title		text
+, 	out_marlo_link		text
+,	out_adic_link	text
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4
 ;
