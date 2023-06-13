@@ -653,7 +653,8 @@
                                         ifnull(if(di.new_expected_year=-1,null,di.new_expected_year), di.`year`)
                         ),'NP') contribution_pk
         , ifnull(pout.composed_id,'NP') indicator_id        
-        ,if(pi.administrative = 1,'Not Applicable',SUBSTRING_INDEX(pout.description,':',1)) "indicator_code" 
+        -- ,if(pi.administrative = 1,'Not Applicable',SUBSTRING_INDEX(pout.description,':',1)) "indicator_code" 
+		,if(pi.administrative = 1,'Not Applicable',pout.acronym) "indicator_code" 
         ,if(pi.administrative = 1,'Not Applicable',ifnull(pout.description,' Not provided')) Indicator
         ,ifnull(region.name, if(ifnull(geo.`name`,'Not Defined')= 'Regional', 'Not Provided', 'Not Applicable')) loc_region
         , ifnull(gender.powb_name, 'Not Provided') gender_level
@@ -1509,7 +1510,7 @@
         <type>String</type>
         <storagetype>normal</storagetype>
         <name>indicator_code</name>
-        <length>65535</length>
+        <length>50</length>
         <precision>-1</precision>
         <origin>Load deliverables</origin>
         <comments>indicator_code</comments>
