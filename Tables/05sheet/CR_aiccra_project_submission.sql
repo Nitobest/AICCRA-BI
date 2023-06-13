@@ -15,7 +15,7 @@ CREATE TABLE `aiccra_project_submission` (
   `Management Liaison Contact Person` text,
   `Lead Institution` longtext,
   `Project Leader` text,
-  `Submission_status` varchar(13) NOT NULL DEFAULT '',
+  `Submission_status` varchar(15) NOT NULL DEFAULT '',
   `submitted_by` varchar(255) DEFAULT NULL,
   `Submission Date` varchar(34) DEFAULT NULL,
   `Submission Justification` longtext,
@@ -27,8 +27,7 @@ CREATE TABLE `aiccra_project_submission` (
   `indicator_ID_2` varchar(22) DEFAULT NULL,
   `missing fields` text,
   `is_evaluated` varchar(3) NOT NULL DEFAULT '',
-  `updated_date` datetime -- NOT NULL DEFAULT '01-01-00 00:00:00'
-  ,
+  `updated_date` datetime -- NOT NULL DEFAULT '01-01-00 00:00:00'  ,
   `Phase` longtext NOT NULL,
   `phase_name` text NOT NULL,
   `phase_year` int NOT NULL
