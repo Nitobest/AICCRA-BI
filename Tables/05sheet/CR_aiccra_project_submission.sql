@@ -30,5 +30,6 @@ CREATE TABLE `aiccra_project_submission` (
   `updated_date` datetime -- NOT NULL DEFAULT '01-01-00 00:00:00'  ,
   `Phase` longtext NOT NULL,
   `phase_name` text NOT NULL,
-  `phase_year` int NOT NULL
+  `phase_year` int NOT null
+  `cluster_acronym` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

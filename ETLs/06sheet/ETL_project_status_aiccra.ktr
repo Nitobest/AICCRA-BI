@@ -753,10 +753,11 @@ ELSE 'ALL'
 end as indicator_ID_2
 ,group_concat(distinct sec.missing_fields) AS "missing fields"
 ,if(gu.acronym = 'CCAFS' and IFNULL(pi.is_evaluated,0)= 0 ,'No','Yes') is_evaluated
-,sysdate() updated_date
+,now() updated_date
 ,concat(ph.name,ph.year) Phase
 ,ph.name phase_name
 ,ph.year phase_year
+,p.acronym cluster_acronym
 FROM projects p
 JOIN projects_info pi ON pi.project_id = p.id
 JOIN bi_parameters bip on bip.parameter_name='project_status_phase' 
@@ -1497,6 +1498,29 @@ GROUP BY
         <date_format_timezone>America/Bogota</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>cluster_acronym</name>
+        <length>21845</length>
+        <precision>-1</precision>
+        <origin>Load aiccra Clusters</origin>
+        <comments>cluster_acronym</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
     </row-meta>
     <attributes/>
     <cluster_schema/>
@@ -1526,90 +1550,123 @@ GROUP BY
     <fields>
       <field>
         <name>CRP</name>
+        <rename/>
       </field>
       <field>
         <name>project id</name>
+        <rename/>
       </field>
       <field>
         <name>Project link</name>
+        <rename/>
       </field>
       <field>
         <name>Project Title</name>
+        <rename/>
       </field>
       <field>
         <name>Project type</name>
+        <rename/>
       </field>
       <field>
         <name>Flagships</name>
+        <rename/>
       </field>
       <field>
         <name>Regions</name>
+        <rename/>
       </field>
       <field>
         <name>Status</name>
+        <rename/>
       </field>
       <field>
         <name>Management Liaison</name>
+        <rename/>
       </field>
       <field>
         <name>Management Liaison acronym</name>
+        <rename/>
       </field>
       <field>
         <name>Management Liaison Contact Person</name>
+        <rename/>
       </field>
       <field>
         <name>Lead Institution</name>
+        <rename/>
       </field>
       <field>
         <name>Project Leader</name>
+        <rename/>
       </field>
       <field>
         <name>Submission_status</name>
+        <rename/>
       </field>
       <field>
         <name>submitted_by</name>
+        <rename/>
       </field>
       <field>
         <name>Submission Date</name>
+        <rename/>
       </field>
       <field>
         <name>Submission Justification</name>
+        <rename/>
       </field>
       <field>
         <name>Unsubmission Justification</name>
+        <rename/>
       </field>
       <field>
         <name>section_id</name>
+        <rename/>
       </field>
       <field>
         <name>section_name</name>
+        <rename/>
       </field>
       <field>
         <name>Section status</name>
+        <rename/>
       </field>
       <field>
         <name>indicator_ID</name>
+        <rename/>
       </field>
       <field>
         <name>indicator_ID_2</name>
+        <rename/>
       </field>
       <field>
         <name>missing fields</name>
+        <rename/>
       </field>
       <field>
         <name>is_evaluated</name>
+        <rename/>
       </field>
       <field>
         <name>updated_date</name>
+        <rename/>
       </field>
       <field>
         <name>Phase</name>
+        <rename/>
       </field>
       <field>
         <name>phase_name</name>
+        <rename/>
       </field>
       <field>
         <name>phase_year</name>
+        <rename/>
+      </field>
+      <field>
+        <name>cluster_acronym</name>
+        <rename/>
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
