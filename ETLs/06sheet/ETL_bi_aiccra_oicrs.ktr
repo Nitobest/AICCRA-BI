@@ -660,7 +660,7 @@ CONCAT(
 ,ifnull(pesi.scope_comments, 'Not Provided') "scope_comment"
 -- 
 -- ,GROUP_CONCAT(distinct ccrp.acronym SEPARATOR ', ') "Contributing CRPs"
-, ifnull(concat(if (ccrp.acronym is not null, concat(ccrp.acronym,'-'), ''), ccrp.name),'Not Provided') "contributing_crp"
+, ifnull(concat(if (ifnull(ccrp.acronym,'')='', concat(ccrp.acronym,'-'), ''), ccrp.name),'Not Provided') "contributing_crp"
 -- 
 -- ,GROUP_CONCAT(distinct if(cfp.program_type=1, cfp.acronym,'') order by cfp.program_type SEPARATOR ', ') "Contributing Flagships"
 -- 
@@ -668,7 +668,8 @@ CONCAT(
 , ifnull(concat(if(cfp.acronym is not null, concat(cfp.acronym, '-'), ''),cfp.name ),'Not Provided') "contributing_regions"
 -- 
 -- ,GROUP_CONCAT(distinct concat('• ', if(ins.acronym is not null,concat(ins.acronym,'-'),''),ins.`name`) SEPARATOR "\r\n" ) "Partners"
-,ifnull(concat(if(ins.acronym is not null,concat(ins.acronym,'-'),''),ins.`name`),'Not Provided') "partner_name"
+ ,ifnull(concat(if(ifnull(trim(ins.acronym),'') != '',concat(ins.acronym,'-'),''),ins.`name`),'Not Provided') "partner_name"
+-- , ifnull(ins.`name`,'Not Provided') "partner_name"
 ,ifnull(pesi.cgiar_innovation,'Not Provided') "cgiar_innovation"
 -- 
 -- ,GROUP_CONCAT(distinct CONCAT('• ','IN',inno.project_innovation_id, ' - ',inno.title)   SEPARATOR "\r\n" ) "Innovations"
@@ -697,7 +698,7 @@ CONCAT(
                                         '_',
                                         pesi.`year`
                         ),'NP') contribution_pk
-,if(pesi.study_type_id =1,ifnull(pescen2.center_name,'Not Provided'), 'Not Applicable') "center_name"
+,if(pesi.study_type_id =1,ifnull(pescen2.center_name,'Not Provided'), 'Not Applicable') "center_name" -- already has the acronym
 ,sclu.shared_clusters
 ,pesp1.owner_cluster_id
 ,pi3.acronym owner_cluster_acronym
@@ -800,7 +801,7 @@ LEFT JOIN (select pesi2.project_expected_study_id , pesi2.id_phase,
 	) pespo1 on pespo1.id_phase = pesi.id_phase and pespo1.project_expected_study_id = pesi.project_expected_study_id		
 -- Centers
 left join (select pescen.expected_id, pescen.id_phase, -- ice.name center_name,
-ifnull(concat(if (ice.acronym is not null, concat(ice.acronym,'-'), ''), ice.name),'Not Provided') center_name
+ifnull(concat(if (ifnull(trim(ice.acronym),'') != '', concat(ice.acronym,'-'), ''), ice.name),'Not Provided') center_name
 		   from project_expected_study_centers pescen 
 		   join institutions ice on ice.id = pescen.institution_id 
 		   join bi_parameters bp11 on bp11.parameter_name ='BI_data_phase'
@@ -1926,7 +1927,7 @@ and not (ifnull(pesi.title,'') = '' and mat.`name` is null)
         <type>String</type>
         <storagetype>normal</storagetype>
         <name>shared_clusters</name>
-        <length>30000</length>
+        <length>1000000</length>
         <precision>-1</precision>
         <origin>Load oicrs</origin>
         <comments>shared_clusters</comments>

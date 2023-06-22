@@ -617,7 +617,8 @@
         ifnull(loc.`name`,'Not Provided')  as 'DLV_location',
         -- ifnull(ccm.`name`,'Not Defined') 'DLV_CrossCuttingDimension',
         -- ifnull(ccml.powb_name,'Not Defined') as 'DLV_CrossCuttingScore',
-        if(p.id is null,'Not applicable',ifnull(ins.name,'Not Provided')) as 'DLV_partnerName',
+		if(p.id is null,'Not applicable',if (ifnull(trim(ins.acronym),'')='',ifnull(trim(ins.name),'Not Provided'),concat(trim(ins.acronym),' - ',ifnull(trim(ins.name),'Not Provided')))) as 'DLV_partnerName',
+		-- if(p.id is null,'Not applicable',ifnull(ins.name,'Not Provided')) as 'DLV_partnerName',
         if(p.id is null,'Not applicable',if(usr.id is null,'Not Defined',concat(usr.first_name,' ', usr.last_name,' &lt;',usr.email,'>')))  as 'DLV_partnerPerson',
         if(isppa.institution_id is not null
             ,if(p.id is null
@@ -1142,7 +1143,7 @@
         <type>String</type>
         <storagetype>normal</storagetype>
         <name>DLV_partnerName</name>
-        <length>65535</length>
+        <length>65583</length>
         <precision>-1</precision>
         <origin>Load deliverables</origin>
         <comments>DLV_partnerName</comments>
