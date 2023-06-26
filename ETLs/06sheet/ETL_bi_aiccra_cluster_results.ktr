@@ -814,7 +814,9 @@ ad.DLV_location location,ad.gender_level , ad.youth_level ,
 ad.DLV_Status status, ad.shared_clusters_acronym, now() last_updated_date,
 ad.DLV_Title out_title,
 ad.Link out_marlo_link,
-'' out_pdf_link
+ad.doi out_pdf_link,
+ad.partner_acronym,
+ad.ppa_partner_acronym
 from aiccra_deliverables ad 
 -- order by ad.PRY_ID, ad.DLV_ID
 union  all
@@ -827,7 +829,9 @@ ao.partner_name , ao.center_name , ao.region , ao.geographic_scope , ao.country 
 ao.status, ao.shared_clusters, NOW()  last_updated_date,
 ao.Title out_title,
 ao.link_oicr_id out_marlo_link,
-ao.link_pdf_file out_pdf_link
+ao.link_pdf_file out_pdf_link,
+ao.partner_acronym,
+ao.ppa_partner_acronym
 from aiccra_oicrs ao 
 -- order by ao.cluster_id, ao.oicr_id
 union all
@@ -839,7 +843,9 @@ ai.contributor_name , ai.center_name , ai.region , ai.geographic_scope , ai.coun
 ai.status status, shared_clusters_acronym , NOW()  last_updated_date,
 ai.innovation_title out_title,
 ai.link_innovation_id out_marlo_link,
-'' out_pdf_link
+'' out_pdf_link,
+ai.partner_acronym,
+ai.ppa_partner_acronym
 from aiccra_innovations ai 
 -- order by ai.cluster_id, ai.innovation_id
 order by 5
@@ -1481,6 +1487,52 @@ order by 5
         <precision>-1</precision>
         <origin>Load cluster results</origin>
         <comments>out_pdf_link</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>partner_acronym</name>
+        <length>50</length>
+        <precision>-1</precision>
+        <origin>Load cluster results</origin>
+        <comments>partner_acronym</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>ppa_partner_acronym</name>
+        <length>50</length>
+        <precision>-1</precision>
+        <origin>Load cluster results</origin>
+        <comments>ppa_partner_acronym</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
