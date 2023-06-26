@@ -1611,105 +1611,147 @@ order by 5
     <fields>
       <field>
         <name>cluster_compose_id</name>
+        <rename/>
       </field>
       <field>
         <name>cluster_summary</name>
+        <rename/>
       </field>
       <field>
         <name>cluster_type</name>
+        <rename/>
       </field>
       <field>
         <name>liaison_institution_name1</name>
+        <rename/>
       </field>
       <field>
         <name>liaison_institution_name2</name>
+        <rename/>
       </field>
       <field>
         <name>cluster_link</name>
+        <rename/>
       </field>
       <field>
         <name>out_type</name>
+        <rename/>
       </field>
       <field>
         <name>out_id</name>
+        <rename/>
       </field>
       <field>
         <name>composite_out_id</name>
+        <rename/>
       </field>
       <field>
         <name>out_type_name</name>
+        <rename/>
       </field>
       <field>
         <name>cluster_id</name>
+        <rename/>
       </field>
       <field>
         <name>cluster_title</name>
+        <rename/>
       </field>
       <field>
         <name>cluster_acronym</name>
+        <rename/>
       </field>
       <field>
         <name>cluster_owner_id</name>
+        <rename/>
       </field>
       <field>
         <name>cluster_owner_type</name>
+        <rename/>
       </field>
       <field>
         <name>cluster_owner_acronym</name>
+        <rename/>
       </field>
       <field>
         <name>out_year</name>
+        <rename/>
       </field>
       <field>
         <name>indicator_pk</name>
+        <rename/>
       </field>
       <field>
         <name>contribution_pk</name>
+        <rename/>
       </field>
       <field>
         <name>indicator_code</name>
+        <rename/>
       </field>
       <field>
         <name>indicator_description</name>
+        <rename/>
       </field>
       <field>
         <name>partner_name</name>
+        <rename/>
       </field>
       <field>
         <name>ppa_partner_name</name>
+        <rename/>
       </field>
       <field>
         <name>loc_region</name>
+        <rename/>
       </field>
       <field>
         <name>geographic_scope</name>
+        <rename/>
       </field>
       <field>
         <name>location</name>
+        <rename/>
       </field>
       <field>
         <name>gender_level</name>
+        <rename/>
       </field>
       <field>
         <name>youth_level</name>
+        <rename/>
       </field>
       <field>
         <name>status</name>
+        <rename/>
       </field>
       <field>
         <name>shared_clusters_acronym</name>
+        <rename/>
       </field>
       <field>
         <name>last_updated_date</name>
+        <rename/>
       </field>
       <field>
         <name>out_title</name>
+        <rename/>
       </field>
       <field>
         <name>out_marlo_link</name>
+        <rename/>
       </field>
       <field>
         <name>out_pdf_link</name>
+        <rename/>
+      </field>
+      <field>
+        <name>partner_acronym</name>
+        <rename/>
+      </field>
+      <field>
+        <name>ppa_partner_acronym</name>
+        <rename/>
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
