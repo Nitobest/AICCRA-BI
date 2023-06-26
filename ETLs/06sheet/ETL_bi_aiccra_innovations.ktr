@@ -746,6 +746,8 @@ pin.id as innovation_id,
 , 'Not applicable' status
 , pi2.title cluster_title 
 , sclu.shared_clusters_acronym
+, inst.contributor_acronym partner_acronym
+, inst.center_acronym ppa_partner_acronym
 FROM phases ph
 -- INNER JOIN global_units gu ON gu.id = ph.global_unit_id
 -- AND gu.is_active
@@ -793,9 +795,10 @@ LEFT JOIN rep_ind_gender_youth_focus_levels riyouth ON riyouth.id = pini.youth_f
 LEFT JOIN project_innovation_crp_outcomes pico2 on pico2.project_innovation_id = pini.project_innovation_id and pico2.id_phase = pini.id_phase 
 LEFT JOIN crp_program_outcomes cpo on cpo.id = pico2.crp_outcome_id 
 LEFT JOIN (select pini1.project_innovation_id, pini1.id_phase, 
-			ifnull(concat(if (ifnull(ice.acronym,'') != '', concat(ice.acronym,'-'), ''), ice.name),'Not Provided') institution_name, 
+			ifnull(concat(if (ifnull(trim(ice.acronym),'') != '', concat(ice.acronym,'-'), ''), ice.name),'Not Provided') institution_name, 
 			'Center/Managing' as institution_role, 
-			ifnull(concat(if (ifnull(ice.acronym,'') != '', concat(ice.acronym,'-'), ''), ice.name),'Not Provided') center_name, '' contributor_name
+			ifnull(concat(if (ifnull(trim(ice.acronym),'') != '', concat(ice.acronym,'-'), ''), ice.name),'Not Provided') center_name, '' contributor_name,
+			if (ifnull(trim(ice.acronym),'') != '', trim(ice.acronym), null) center_acronym, '' contributor_acronym
 		   from project_innovations pin1 
 		   inner join bi_parameters bpa1 on bpa1.parameter_name='BI_data_phase'
 		   INNER JOIN phases ph1 on ph1.id = cast(bpa1.parameter_value as double)
@@ -807,7 +810,8 @@ LEFT JOIN (select pini1.project_innovation_id, pini1.id_phase,
 			ifnull(concat(if (ifnull(io.acronym,'') != '' , concat(io.acronym,'-'), ''), io.name),'Not Provided') institution_name, 
 			'Contributor' as institution_role, 
 			'' center_name, 
-			ifnull(concat(if (ifnull(io.acronym,'') != '', concat(io.acronym,'-'), ''), io.name),'Not Provided') contributor_name
+			ifnull(concat(if (ifnull(io.acronym,'') != '', concat(io.acronym,'-'), ''), io.name),'Not Provided') contributor_name,
+			'' center_acronym, if (ifnull(trim(io.acronym),'') != '', trim(io.acronym), null) contributor_acronym
 		   from project_innovations pin1 
 		   inner join bi_parameters bpa1 on bpa1.parameter_name='BI_data_phase'
 		   INNER JOIN phases ph1 on ph1.id = cast(bpa1.parameter_value as double)
@@ -1564,10 +1568,56 @@ ORDER BY
         <type>String</type>
         <storagetype>normal</storagetype>
         <name>shared_clusters_acronym</name>
-        <length>30000</length>
+        <length>1000000</length>
         <precision>-1</precision>
         <origin>Load innovations</origin>
         <comments>shared_clusters_acronym</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>partner_acronym</name>
+        <length>45</length>
+        <precision>-1</precision>
+        <origin>Load innovations</origin>
+        <comments>partner_acronym</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>ppa_partner_acronym</name>
+        <length>45</length>
+        <precision>-1</precision>
+        <origin>Load innovations</origin>
+        <comments>ppa_partner_acronym</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>

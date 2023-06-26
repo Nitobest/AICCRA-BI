@@ -36,5 +36,7 @@ CREATE TABLE aiccra_cluster_results
 , 	out_title		text
 , 	out_marlo_link		text
 ,	out_adic_link	text
+,	partner_acronym varchar(50) default null
+, 	ppa_partner_acronym varchar(50) default null
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4
 ;

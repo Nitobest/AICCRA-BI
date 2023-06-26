@@ -55,5 +55,7 @@ CREATE TABLE `stg_aiccra_deliverables` (
    `id_phase_dlv` bigint(20),
    `cluster_owner_id` bigint(20),
    `cluster_owner_acronym` text,
-   `updated_date` timestamp DEFAULT NULL
+   `updated_date` timestamp DEFAULT NULL,
+   `partner_acronym` varchar(50) default null,
+   `ppa_partner_acronym` varchar(50) default null
  ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4

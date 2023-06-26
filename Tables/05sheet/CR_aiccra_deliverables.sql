@@ -62,5 +62,7 @@ CREATE TABLE `aiccra_deliverables` (
    `cluster_owner_id` bigint(20),
    `cluster_owner_acronym` text,
    `shared_clusters_acronym` text,
-   `updated_date` timestamp DEFAULT NULL
+   `updated_date` timestamp DEFAULT null,
+   `partner_acronym` varchar(50) default null,
+   `ppa_partner_acronym` varchar(50) default null
  ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4

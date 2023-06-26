@@ -689,7 +689,10 @@
 		,d.id_phase id_phase_dlv
 		,d.project_id cluster_owner_id
 		,pown.acronym cluster_owner_acronym
-		,sysdate() updated_date
+		,now() updated_date
+		,if(p.id is null,null,if (ifnull(trim(ins.acronym),'')='',null,trim(ins.acronym))) as 'partner_acronym'
+		,if(isppa.institution_id is not null, if(ifnull(ins.acronym,'') ='', null, ins.acronym)
+			,if(ifnull(ippa.acronym,'')='', null, ippa.acronym)) as 'ppa_partner_acronym'
         -- #,'##############################',di.*
         -- select *
         FROM  deliverables d
@@ -703,7 +706,7 @@
         -- LEFT JOIN deliverable_cross_cutting_markers dccm on dccm.deliverable_id = di.deliverable_id and dccm.id_phase = di.id_phase and dccm.cgiar_cross_cutting_marker_id = ccm.id
         -- LEFT JOIN rep_ind_gender_youth_focus_levels ccml on ccml.id = dccm.rep_ind_gender_youth_focus_level_id
         -- # 20201006 CC cluster onwer + shared
- left join (select ddi.id_phase, dd.project_id,ddi.deliverable_id, "(Owner)" cluster_owner_type
+ 	left join (select ddi.id_phase, dd.project_id,ddi.deliverable_id, "(Owner)" cluster_owner_type
  	from deliverables dd
  	join deliverables_info ddi on ddi.deliverable_id = dd.id 
  	-- where ddi.id_phase = 406
@@ -2044,6 +2047,52 @@
         <precision>-1</precision>
         <origin>Load deliverables</origin>
         <comments>updated_date</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>partner_acronym</name>
+        <length>45</length>
+        <precision>-1</precision>
+        <origin>Load deliverables</origin>
+        <comments>partner_acronym</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>ppa_partner_acronym</name>
+        <length>45</length>
+        <precision>-1</precision>
+        <origin>Load deliverables</origin>
+        <comments>ppa_partner_acronym</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>

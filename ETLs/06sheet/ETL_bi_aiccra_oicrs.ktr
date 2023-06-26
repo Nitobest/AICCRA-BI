@@ -686,7 +686,7 @@ CONCAT(
 ,if(pesi.study_type_id =1,ifnull(climate.`name`,'Not Provided'), 'Not Applicable') "climate"
 ,if(pesi.study_type_id =1,ifnull(pesi.describe_climate_change,'Not Provided'), 'Not Applicable') "climate_relevance_despcription"
 ,ifnull(pesi.contacts,'Not Provided') "contact_person"
-,sysdate() updated_date
+,now() updated_date
 ,pespo1.indicator_acronym
 ,pespo1.indicator_description
 ,pespo1.outcome_id indicator_id
@@ -703,6 +703,8 @@ CONCAT(
 ,pesp1.owner_cluster_id
 ,pi3.acronym owner_cluster_acronym
 ,ifnull(pesi.score,0) feedback_score
+,if(ifnull(trim(ins.acronym),'') != '',trim(ins.acronym),null) "partner_acronym"
+, pescen2.center_acronym "ppa_partner_acronym"
 FROM project_expected_studies pes 
 INNER JOIN project_expected_study_info pesi ON pesi.project_expected_study_id = pes.id 
 INNER JOIN (select parameter_name, cast(parameter_value as double) parameter_value from bi_parameters where parameter_name='BI_data_phase' ) bpacc on bpacc.parameter_name= 'BI_data_phase'
@@ -801,7 +803,8 @@ LEFT JOIN (select pesi2.project_expected_study_id , pesi2.id_phase,
 	) pespo1 on pespo1.id_phase = pesi.id_phase and pespo1.project_expected_study_id = pesi.project_expected_study_id		
 -- Centers
 left join (select pescen.expected_id, pescen.id_phase, -- ice.name center_name,
-ifnull(concat(if (ifnull(trim(ice.acronym),'') != '', concat(ice.acronym,'-'), ''), ice.name),'Not Provided') center_name
+		   ifnull(concat(if (ifnull(trim(ice.acronym),'') != '', concat(ice.acronym,'-'), ''), ice.name),'Not Provided') center_name,
+		   if(ifnull(trim(ice.acronym),'') != '', trim(ice.acronym), null) center_acronym
 		   from project_expected_study_centers pescen 
 		   join institutions ice on ice.id = pescen.institution_id 
 		   join bi_parameters bp11 on bp11.parameter_name ='BI_data_phase'
@@ -2000,6 +2003,52 @@ and not (ifnull(pesi.title,'') = '' and mat.`name` is null)
         <precision>-1</precision>
         <origin>Load oicrs</origin>
         <comments>feedback_score</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>partner_acronym</name>
+        <length>45</length>
+        <precision>-1</precision>
+        <origin>Load oicrs</origin>
+        <comments>partner_acronym</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>ppa_partner_acronym</name>
+        <length>45</length>
+        <precision>-1</precision>
+        <origin>Load oicrs</origin>
+        <comments>ppa_partner_acronym</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>

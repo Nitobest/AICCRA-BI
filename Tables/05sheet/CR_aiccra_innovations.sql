@@ -34,5 +34,7 @@ CREATE TABLE aiccra_innovations
 , status text
 , cluster_title text
 , shared_clusters_acronym text
+, partner_acronym varchar(50) default null
+, ppa_partner_acronym varchar(50) default null
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4
 ;
