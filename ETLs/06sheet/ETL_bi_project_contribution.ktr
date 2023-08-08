@@ -625,32 +625,32 @@
 	, (select ifnull(GROUP_CONCAT(pouti.narrative),'') from project_outcome_indicators pouti where pouti.project_outcome_id = pout.id and pouti.crp_outcome_indicator=outi.id and pouti.is_active) 'Report Narrative'
 	, concat(ph.id,'_',mil.composed_id) pk
 	, concat(p.id,'_',outc.composed_id,'_',mil.year) contribution_pk
-	, pcl.lessons 	
+	, pcl.lessons
+    , phd.name default_phase_name
+	, phd.year default_phase_year 	
 	FROM	projects p
 	INNER JOIN projects_info pi ON pi.project_id = p.id
 	JOIN cluster_types ct on ct.id = pi.type_id
 	-- join bi_parameters bpa on bpa.parameter_name='BI_data_phase'
 	INNER JOIN phases ph ON ph.id = pi.id_phase -- and ph.id = bpa.parameter_value
 	INNER JOIN global_units gu ON gu.id = ph.global_unit_id
-
 	JOIN project_outcomes pout on pout.project_id = pi.project_id and pout.id_phase = pi.id_phase  and pout.is_active
-	
 	JOIN crp_program_outcomes outc on outc.id = pout.outcome_id
 	JOIN crp_programs fp on fp.id = outc.crp_program_id
 	JOIN srf_target_units unit on unit.id = outc.target_unit_id
+	join phases phd on phd.id = get_max_open_phase(ph.global_unit_id)
 	left join crp_program_outcome_indicator outi on outi.crp_program_outcome_id = outc.id and outi.is_active
-	
-	
+-- 	
 	-- Questions from progress
 	left join phases ph2 on ph2.year=ph.year and ph2.global_unit_id = ph.global_unit_id and ph2.name='Progress'
 	left join crp_program_outcomes outc2 on outc.composed_id = outc2.composed_id and outc2.id_phase = ph2.id
   left JOIN project_outcomes pout2 on pout2.project_id = pi.project_id and pout2.id_phase = ph2.id and outc2.id = pout2.outcome_id and pout2.is_active
   left join crp_program_outcome_indicator outi2 on outc2.id = outi2.crp_program_outcome_id and outi2.is_active	
-
+-- 
 	LEFT JOIN srf_target_units exunit on exunit.id = pout.expected_unit
 	LEFT JOIN project_communications com on com.project_outcome_id =pout.id and com.is_active
 	LEFT JOIN project_nextusers next on next.project_outcome_id =pout.id and next.is_active
-
+-- 
 	left join project_milestones pmil on pmil.project_outcome_id = pout.id and pmil.is_active and pmil.year &lt;&gt; -1
 	LEFT JOIN crp_milestones mil on mil.id = pmil.crp_milestone_id
 	LEFT JOIN srf_target_units munit on munit.id = pmil.expected_unit
@@ -1387,7 +1387,7 @@
         <type>String</type>
         <storagetype>normal</storagetype>
         <name>Progress Narrative</name>
-        <length>30000</length>
+        <length>1000000</length>
         <precision>-1</precision>
         <origin>Load_ project_contribution</origin>
         <comments>Progress Narrative</comments>
@@ -1433,7 +1433,7 @@
         <type>String</type>
         <storagetype>normal</storagetype>
         <name>Report Narrative</name>
-        <length>30000</length>
+        <length>1000000</length>
         <precision>-1</precision>
         <origin>Load_ project_contribution</origin>
         <comments>Report Narrative</comments>
@@ -1507,6 +1507,52 @@
         <origin>Load_ project_contribution</origin>
         <comments>lessons</comments>
         <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>default_phase_name</name>
+        <length>65535</length>
+        <precision>-1</precision>
+        <origin>Load_ project_contribution</origin>
+        <comments>default_phase_name</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>en_US</date_format_locale>
+        <date_format_timezone>America/Bogota</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>default_phase_year</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>Load_ project_contribution</origin>
+        <comments>default_phase_year</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
         <currency_symbol/>
