@@ -626,8 +626,8 @@
 	, concat(ph.id,'_',mil.composed_id) pk
 	, concat(p.id,'_',outc.composed_id,'_',mil.year) contribution_pk
 	, pcl.lessons
-    , phd.name default_phase_name
-	, phd.year default_phase_year 	
+    , dfp.name default_phase_name
+	, dfp.year default_phase_year 	
 	FROM	projects p
 	INNER JOIN projects_info pi ON pi.project_id = p.id
 	JOIN cluster_types ct on ct.id = pi.type_id
@@ -638,7 +638,15 @@
 	JOIN crp_program_outcomes outc on outc.id = pout.outcome_id
 	JOIN crp_programs fp on fp.id = outc.crp_program_id
 	JOIN srf_target_units unit on unit.id = outc.target_unit_id
-	join phases phd on phd.id = get_max_open_phase(ph.global_unit_id)
+	-- join phases phd on phd.id = get_max_open_phase(ph.global_unit_id)
+	join (select  oo.id,phd1.name, phd1.year
+			from custom_parameters cp 
+			join phases phd1 on phd1.id = cast(value as UNSIGNED )
+			join global_units oo on oo.id = phd1.global_unit_id 
+			where cp.parameter_id = 204 
+			and cp.is_active 
+			and cp.global_unit_id = oo.id
+			and oo.is_active) dfp on dfp.id = ph.global_unit_id 
 	left join crp_program_outcome_indicator outi on outi.crp_program_outcome_id = outc.id and outi.is_active
 -- 	
 	-- Questions from progress
