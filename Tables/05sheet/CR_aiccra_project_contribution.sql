@@ -37,5 +37,7 @@ CREATE TABLE `aiccra_project_contribution` (
    `Report narrative` text COLLATE utf8_unicode_ci,
    `pk` varchar(41) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
    `contribution_pk` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-   `lessons` text COLLATE utf8_unicode_ci
+   `lessons` text COLLATE utf8_unicode_ci,
+   default_phase_name TEXT,
+   default_phase_year INT
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
