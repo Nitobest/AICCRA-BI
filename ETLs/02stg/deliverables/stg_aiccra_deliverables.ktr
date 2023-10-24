@@ -675,7 +675,8 @@
         ,concat('https://aiccra.marlo.cgiar.org/projects/',gu.acronym,'/deliverable.do?deliverableID=',di.deliverable_id,'&amp;edit=true&amp;phaseID=',
         -- if(d.id_phase > get_max_open_phase(gu.id),d.id_phase,get_max_open_phase(gu.id))
         -- if(d.id_phase > max_id_phase.mid_phase,d.id_phase,max_id_phase.mid_phase) 
-        "423"
+        max_id_phase.mid_phase  -- fase por default
+        -- "423"
         ) Link
         -- ,get_deliverable_url(di.deliverable_id,di.id_phase)as doi -- 42s
        	,dai.score altmetric_score
@@ -702,7 +703,7 @@
         JOIN phases ph on ph.id = di.id_phase and ph.id = bpa.parameter_value
         JOIN global_units gu ON gu.id = ph.global_unit_id AND gu.is_active
         -- 20221010 CC utilizar la funcion get_max_open_phase solo una vez por global unit
-        -- join (select gu1.id gu_id, ifnull(get_max_open_phase(gu1.id),0) mid_phase from global_units gu1 where gu1.is_active) max_id_phase on max_id_phase.gu_id = gu.id
+        join (select gu1.id gu_id, ifnull(get_max_open_phase(gu1.id),0) mid_phase from global_units gu1 where gu1.is_active) max_id_phase on max_id_phase.gu_id = gu.id
         -- JOIN cgiar_cross_cutting_markers ccm 
         -- LEFT JOIN deliverable_cross_cutting_markers dccm on dccm.deliverable_id = di.deliverable_id and dccm.id_phase = di.id_phase and dccm.cgiar_cross_cutting_marker_id = ccm.id
         -- LEFT JOIN rep_ind_gender_youth_focus_levels ccml on ccml.id = dccm.rep_ind_gender_youth_focus_level_id
@@ -1768,7 +1769,7 @@
         <type>String</type>
         <storagetype>normal</storagetype>
         <name>Link</name>
-        <length>162</length>
+        <length>179</length>
         <precision>-1</precision>
         <origin>Load deliverables</origin>
         <comments>Link</comments>

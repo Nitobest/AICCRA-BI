@@ -601,9 +601,10 @@
         -- ,get_deliverable_metadata (di.deliverable_id,di.id_phase,'marlo.doi') as 'DOI'
         -- ,get_deliverable_metadata (di.deliverable_id,di.id_phase,'marlo.handle') as 'Handle'
         -- ,pmet.journal
-        ,get_deliverable_url(di.deliverable_id,di.id_phase)as doi -- 42s
+        -- , get_deliverable_url(di.deliverable_id,di.id_phase) as doi2 
+		-- Change the doi to manage confidential deliverables
+        ,if(ifnull(dis.confidential,0) = 1, "Confidential", get_deliverable_url(di.deliverable_id,di.id_phase)) as doi -- 42s
         , pds1.dlv_shared_clusters shared_clusters_acronym
-
         ,sysdate() updated_date
         -- #,'##############################',di.*
         -- select *
@@ -614,6 +615,7 @@
         JOIN global_units gu ON gu.id = ph.global_unit_id AND gu.is_active
         LEFT JOIN deliverable_types dt ON dt.id = di.type_id
         LEFT JOIN deliverable_types dtParent ON dtParent.id = dt.parent_id
+		left join deliverable_dissemination dis on dis.deliverable_id = di.deliverable_id and dis.id_phase = di.id_phase
         LEFT JOIN (select di2.deliverable_id,di2.id_phase
         			, GROUP_CONCAT(distinct psh.acronym order by psh.acronym) dlv_shared_clusters 
         		   from deliverables_info di2 
@@ -631,8 +633,7 @@
         -- and ph.global_unit_id=45
         -- and d.id =24949
         order by 2
-        -- group by d.id,par.deliverable_partner_type_id,ins.id
-</sql>
+        -- group by d.id,par.deliverable_partner_type_id,ins.id</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -851,7 +852,7 @@
         <type>String</type>
         <storagetype>normal</storagetype>
         <name>shared_clusters_acronym</name>
-        <length>30000</length>
+        <length>1000000</length>
         <precision>-1</precision>
         <origin>Load deliverables</origin>
         <comments>shared_clusters_acronym</comments>
