@@ -39,5 +39,6 @@ CREATE TABLE `aiccra_project_contribution` (
    `contribution_pk` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
    `lessons` text COLLATE utf8_unicode_ci,
    default_phase_name TEXT,
-   default_phase_year INT
+   default_phase_year INT,
+   project_acronym	TEXT
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
