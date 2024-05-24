@@ -431,7 +431,7 @@
     <created_date>2018/08/16 16:06:11.363</created_date>
     <modified_user>-</modified_user>
     <modified_date>2018/08/16 16:06:11.363</modified_date>
-    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
+    <key_for_session_key>H4sIAAAAAAAA/wMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
@@ -466,6 +466,7 @@
     <add_filename_result>N</add_filename_result>
     <parallel>N</parallel>
     <newline_possible>N</newline_possible>
+    <format/>
     <encoding/>
     <fields>
       <field>
@@ -766,6 +767,7 @@
         <trim_type>none</trim_type>
       </field>
     </fields>
+    <attributes/>
     <cluster_schema/>
     <remotesteps>
       <input>
@@ -774,8 +776,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>48</xloc>
-      <yloc>32</yloc>
+      <xloc>64</xloc>
+      <yloc>176</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -955,6 +957,7 @@
       </field>
     </fields>
     <use_formatting>Y</use_formatting>
+    <attributes/>
     <cluster_schema/>
     <remotesteps>
       <input>
@@ -963,8 +966,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>208</xloc>
-      <yloc>32</yloc>
+      <xloc>256</xloc>
+      <yloc>176</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -973,4 +976,5 @@
   <slave-step-copy-partition-distribution>
   </slave-step-copy-partition-distribution>
   <slave_transformation>N</slave_transformation>
+  <attributes/>
 </transformation>
